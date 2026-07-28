@@ -1,5 +1,9 @@
 # orderflow-metrics
 
+[![CI](https://github.com/twowaymind/orderflow-metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/twowaymind/orderflow-metrics/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-22%2B-brightgreen.svg)](package.json)
+
 Microstructure **order-flow metrics** in dependency-free TypeScript: Order Flow
 Imbalance (OFI) and top-of-book / trade imbalance. Runs on Node 22+ with no
 build step and no runtime dependencies.
