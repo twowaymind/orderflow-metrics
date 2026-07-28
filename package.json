@@ -1,0 +1,31 @@
+{
+  "name": "orderflow-metrics",
+  "version": "0.1.0",
+  "description": "Microstructure order-flow metrics — Order Flow Imbalance (OFI), depth and trade imbalance — in dependency-free TypeScript.",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types --test",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "market-microstructure",
+    "order-flow-imbalance",
+    "ofi",
+    "order-book",
+    "hft",
+    "trading",
+    "quantitative-finance",
+    "typescript"
+  ],
+  "author": "TwoWayMind (RATE LTD)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twowaymind/orderflow-metrics.git"
+  },
+  "homepage": "https://twowaymind.com",
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
