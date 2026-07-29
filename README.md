@@ -59,6 +59,25 @@ is a strong linear predictor of short-horizon price changes.
 - `depthImbalance(quote)` — `(bidSize − askSize) / (bidSize + askSize)`, in `[-1, 1]`
 - `tradeImbalance(trades)` — `(buyVol − sellVol) / (buyVol + sellVol)`, in `[-1, 1]`
 
+## VPIN
+
+`vpin` implements Volume-Synchronized Probability of Informed Trading (Easley,
+López de Prado & O'Hara, 2012). Trades are grouped into equal-volume buckets;
+each bucket is split into buy/sell volume by Bulk Volume Classification (BVC)
+from the standardized price change, and VPIN is the average absolute imbalance
+across a rolling window.
+
+```ts
+import { bucketByVolume, vpin } from "orderflow-metrics";
+
+const buckets = bucketByVolume(trades, 1_000); // equal-volume buckets
+vpin(buckets, { window: 50 }); // flow toxicity in [0, 1]
+```
+
+- `bucketByVolume(trades, bucketSize)` — split a trade stream into equal-volume buckets
+- `bvcBuyFraction(priceChange, sigma)` — BVC buy fraction Φ(ΔP/σ)
+- `vpin(buckets, { window, sigma })` — VPIN over the last `window` buckets
+
 ## Tests
 
 ```bash
