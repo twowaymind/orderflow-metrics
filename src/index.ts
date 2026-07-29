@@ -8,3 +8,12 @@ export {
   bvcBuyFraction,
   standardNormalCdf,
 } from "./vpin.ts";
+export type { FlowObservation } from "./execution.ts";
+export {
+  effectiveSpread,
+  effectiveHalfSpread,
+  realizedSpread,
+  priceImpact,
+  kyleLambda,
+  rollSpread,
+} from "./execution.ts";

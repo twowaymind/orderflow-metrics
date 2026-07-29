@@ -2,6 +2,14 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.3.0] - 2026-07-29
+
+### Added
+- Execution-cost & price-impact metrics: `effectiveSpread`,
+  `effectiveHalfSpread`, `realizedSpread`, `priceImpact`, `kyleLambda`
+  (price impact per unit signed flow) and `rollSpread` (Roll's 1984
+  autocovariance estimator). Test suite included.
+
 ## [0.2.0] - 2026-07-28
 
 ### Added

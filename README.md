@@ -78,6 +78,29 @@ vpin(buckets, { window: 50 }); // flow toxicity in [0, 1]
 - `bvcBuyFraction(priceChange, sigma)` — BVC buy fraction Φ(ΔP/σ)
 - `vpin(buckets, { window, sigma })` — VPIN over the last `window` buckets
 
+## Execution cost & price impact
+
+Transaction-cost analysis (TCA) building blocks (buys `+1`, sells `−1`):
+
+```ts
+import { effectiveSpread, realizedSpread, priceImpact, kyleLambda } from "orderflow-metrics";
+
+effectiveSpread(101, 100, "buy");        // 2  — cost vs the midpoint
+realizedSpread(101, 100.5, "buy");       // 1  — LP revenue after reversion
+priceImpact(100, 100.5, "buy");          // 1  — permanent impact (effective − realized)
+
+kyleLambda([                             // price impact per unit signed flow
+  { signedVolume: 2, priceChange: 1 },
+  { signedVolume: -2, priceChange: -1 },
+]);                                      // 0.5
+```
+
+- `effectiveSpread` / `effectiveHalfSpread` — realized cost vs the quote mid
+- `realizedSpread` — post-trade reversion component
+- `priceImpact` — permanent impact
+- `kyleLambda` — OLS impact slope of ΔP on signed volume
+- `rollSpread` — Roll's (1984) spread from price-change autocovariance
+
 ## Tests
 
 ```bash
