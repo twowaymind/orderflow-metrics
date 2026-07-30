@@ -17,3 +17,4 @@ export {
   kyleLambda,
   rollSpread,
 } from "./execution.ts";
+export { mid, weightedMid, relativeSpreadBps } from "./fairvalue.ts";

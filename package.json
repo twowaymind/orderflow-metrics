@@ -1,7 +1,7 @@
 {
   "name": "orderflow-metrics",
-  "version": "0.3.0",
-  "description": "Microstructure order-flow & execution-cost metrics — OFI, VPIN, effective/realized spread, price impact, Kyle's lambda — in dependency-free TypeScript.",
+  "version": "0.4.0",
+  "description": "Microstructure order-flow, execution-cost & fair-value metrics — OFI, VPIN, spreads, price impact, Kyle's lambda, weighted mid — in dependency-free TypeScript.",
   "type": "module",
   "exports": "./src/index.ts",
   "scripts": {

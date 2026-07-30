@@ -101,6 +101,19 @@ kyleLambda([                             // price impact per unit signed flow
 - `kyleLambda` — OLS impact slope of ΔP on signed volume
 - `rollSpread` — Roll's (1984) spread from price-change autocovariance
 
+## Fair value
+
+```ts
+import { weightedMid, relativeSpreadBps } from "orderflow-metrics";
+
+weightedMid({ bidPrice: 100, bidSize: 9, askPrice: 101, askSize: 1 }); // ~100.9 — heavy bid pulls toward ask
+relativeSpreadBps({ bidPrice: 99.99, bidSize: 1, askPrice: 100.01, askSize: 1 }); // 2 (bps)
+```
+
+- `weightedMid` — imbalance-weighted mid (a simple micro-price)
+- `mid` — arithmetic mid
+- `relativeSpreadBps` — quoted spread in basis points
+
 ## Tests
 
 ```bash

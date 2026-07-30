@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.4.0] - 2026-07-30
+
+### Added
+- Fair-value helpers: `weightedMid` (imbalance-weighted mid / simple
+  micro-price), `mid`, and `relativeSpreadBps` (quoted spread in basis
+  points). Test suite included.
+
 ## [0.3.0] - 2026-07-29
 
 ### Added
