@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.5.0] - 2026-07-31
+
+### Added
+- Trade-sign classification: `tickRule` and `leeReady` (Lee-Ready 1991) infer
+  buyer/seller-initiated trades from prints, so OFI / imbalance / VPIN inputs
+  can be signed. Test suite included.
+
 ## [0.4.0] - 2026-07-30
 
 ### Added

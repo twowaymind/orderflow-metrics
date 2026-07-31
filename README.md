@@ -114,6 +114,21 @@ relativeSpreadBps({ bidPrice: 99.99, bidSize: 1, askPrice: 100.01, askSize: 1 })
 - `mid` — arithmetic mid
 - `relativeSpreadBps` — quoted spread in basis points
 
+## Trade-sign classification
+
+Public prints rarely say who was the aggressor. Infer it so OFI / imbalance /
+VPIN inputs can be signed (+1 buyer-initiated, −1 seller-initiated, 0 unknown):
+
+```ts
+import { tickRule, leeReady } from "orderflow-metrics";
+
+tickRule([100, 101, 101, 100]);                        // [0, 1, 1, -1]
+leeReady([{ price: 101, mid: 100 }, { price: 99, mid: 100 }]); // [1, -1]
+```
+
+- `tickRule` — sign from the change vs the previous price (zero ticks carry)
+- `leeReady` — Lee-Ready (1991): quote rule, with the tick rule breaking ties
+
 ## Tests
 
 ```bash

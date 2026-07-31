@@ -18,3 +18,5 @@ export {
   rollSpread,
 } from "./execution.ts";
 export { mid, weightedMid, relativeSpreadBps } from "./fairvalue.ts";
+export type { Sign, PriceVsMid } from "./classify.ts";
+export { tickRule, leeReady } from "./classify.ts";
