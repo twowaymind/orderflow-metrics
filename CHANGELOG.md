@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.0] - 2026-08-01
+
+### Added
+- `amihudIlliquidity` — Amihud (2002) illiquidity, the average of
+  |return| / volume across periods (price move per unit of traded volume).
+  Test suite included.
+
 ## [0.5.0] - 2026-07-31
 
 ### Added

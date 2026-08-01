@@ -129,6 +129,19 @@ leeReady([{ price: 101, mid: 100 }, { price: 99, mid: 100 }]); // [1, -1]
 - `tickRule` — sign from the change vs the previous price (zero ticks carry)
 - `leeReady` — Lee-Ready (1991): quote rule, with the tick rule breaking ties
 
+## Liquidity
+
+```ts
+import { amihudIlliquidity } from "orderflow-metrics";
+
+amihudIlliquidity([
+  { ret: 0.02, volume: 100 },
+  { ret: -0.01, volume: 50 },
+]); // 0.0002 — price move per unit of volume; higher = thinner
+```
+
+- `amihudIlliquidity` — Amihud (2002): average |return| / volume across periods
+
 ## Tests
 
 ```bash
