@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.7.0] - 2026-08-02
+
+### Added
+- Realized volatility: `realizedVariance` (Σ rᵢ²), `realizedVolatility`
+  (√ of it) and `annualizedVolatility` (scaled by periods per year). Test
+  suite included.
+
 ## [0.6.0] - 2026-08-01
 
 ### Added

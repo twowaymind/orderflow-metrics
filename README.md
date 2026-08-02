@@ -142,6 +142,19 @@ amihudIlliquidity([
 
 - `amihudIlliquidity` — Amihud (2002): average |return| / volume across periods
 
+## Volatility
+
+```ts
+import { realizedVolatility, annualizedVolatility } from "orderflow-metrics";
+
+realizedVolatility([0.03, 0.04]);          // 0.05  — √(Σ rᵢ²)
+annualizedVolatility(minuteReturns, 252 * 390); // scaled to a year
+```
+
+- `realizedVariance` — Σ rᵢ²
+- `realizedVolatility` — √ of the realized variance
+- `annualizedVolatility` — √( mean(rᵢ²) · periodsPerYear )
+
 ## Tests
 
 ```bash

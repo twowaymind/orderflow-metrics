@@ -1,6 +1,6 @@
 {
   "name": "orderflow-metrics",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Microstructure metrics in dependency-free TypeScript — OFI, VPIN, spreads, price impact, Kyle's lambda, weighted mid, trade-sign classification, Amihud illiquidity.",
   "type": "module",
   "exports": "./src/index.ts",

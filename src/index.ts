@@ -22,3 +22,8 @@ export type { Sign, PriceVsMid } from "./classify.ts";
 export { tickRule, leeReady } from "./classify.ts";
 export type { ReturnVolume } from "./liquidity.ts";
 export { amihudIlliquidity } from "./liquidity.ts";
+export {
+  realizedVariance,
+  realizedVolatility,
+  annualizedVolatility,
+} from "./volatility.ts";
