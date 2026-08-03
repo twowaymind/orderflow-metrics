@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.8.0] - 2026-08-04
+
+### Added
+- Market-efficiency diagnostics: `autocorrelation(returns, lag)` and
+  `varianceRatio(returns, q)` (Lo-MacKinlay: <1 mean-reverting, ~1 random
+  walk, >1 trending). Test suite included.
+
 ## [0.7.0] - 2026-08-02
 
 ### Added

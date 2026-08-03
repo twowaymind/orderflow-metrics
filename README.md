@@ -155,6 +155,18 @@ annualizedVolatility(minuteReturns, 252 * 390); // scaled to a year
 - `realizedVolatility` — √ of the realized variance
 - `annualizedVolatility` — √( mean(rᵢ²) · periodsPerYear )
 
+## Market efficiency
+
+```ts
+import { varianceRatio, autocorrelation } from "orderflow-metrics";
+
+varianceRatio(returns, 2);   // <1 mean-reverting · ~1 random walk · >1 trending
+autocorrelation(returns, 1); // lag-1 return autocorrelation
+```
+
+- `varianceRatio` — Lo-MacKinlay variance ratio over overlapping q-period returns
+- `autocorrelation` — lag-k autocorrelation of a return series
+
 ## Tests
 
 ```bash

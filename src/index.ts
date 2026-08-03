@@ -27,3 +27,4 @@ export {
   realizedVolatility,
   annualizedVolatility,
 } from "./volatility.ts";
+export { autocorrelation, varianceRatio } from "./efficiency.ts";
