@@ -167,6 +167,28 @@ autocorrelation(returns, 1); // lag-1 return autocorrelation
 - `varianceRatio` — Lo-MacKinlay variance ratio over overlapping q-period returns
 - `autocorrelation` — lag-k autocorrelation of a return series
 
+## Order book
+
+Reconstruct a limit order book from incremental level updates and read the
+usual top-of-book / depth signals:
+
+```ts
+import { OrderBook } from "orderflow-metrics";
+
+const ob = new OrderBook();
+ob.update("bid", 100, 5);
+ob.update("ask", 101, 3);
+
+ob.bestBid();      // { price: 100, size: 5 }
+ob.mid();          // 100.5
+ob.spread();       // 1
+ob.imbalance(1);   // 0.25  — top-of-book bid/ask size imbalance
+ob.update("bid", 100, 0); // size 0 removes the level
+```
+
+- `update(side, price, size)` · `bestBid` / `bestAsk` · `mid` · `spread`
+- `depth(side, n)` — top n levels · `imbalance(n)` — depth imbalance in `[-1, 1]`
+
 ## Tests
 
 ```bash

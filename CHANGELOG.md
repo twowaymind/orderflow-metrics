@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.9.0] - 2026-08-04
+
+### Added
+- `OrderBook` — limit order book reconstruction from incremental level
+  updates: `bestBid`/`bestAsk`, `mid`, `spread`, `depth(side, n)` and
+  top-n `imbalance`. Size-0 updates remove a level. Test suite included.
+
 ## [0.8.0] - 2026-08-04
 
 ### Added

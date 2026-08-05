@@ -28,3 +28,5 @@ export {
   annualizedVolatility,
 } from "./volatility.ts";
 export { autocorrelation, varianceRatio } from "./efficiency.ts";
+export type { BookSide, Level } from "./orderbook.ts";
+export { OrderBook } from "./orderbook.ts";
