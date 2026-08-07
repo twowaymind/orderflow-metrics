@@ -30,3 +30,5 @@ export {
 export { autocorrelation, varianceRatio } from "./efficiency.ts";
 export type { BookSide, Level } from "./orderbook.ts";
 export { OrderBook } from "./orderbook.ts";
+export type { Fill, MarketOrderResult } from "./simulate.ts";
+export { simulateMarketOrder } from "./simulate.ts";

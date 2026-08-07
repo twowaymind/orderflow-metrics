@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.10.0] - 2026-08-05
+
+### Added
+- `simulateMarketOrder(book, side, size)` — sweep an `OrderBook` with a market
+  order: volume-weighted fill price, slippage vs mid (bps), unfilled remainder
+  and per-level fills. Read-only. Test suite included.
+
 ## [0.9.0] - 2026-08-04
 
 ### Added

@@ -189,6 +189,20 @@ ob.update("bid", 100, 0); // size 0 removes the level
 - `update(side, price, size)` · `bestBid` / `bestAsk` · `mid` · `spread`
 - `depth(side, n)` — top n levels · `imbalance(n)` — depth imbalance in `[-1, 1]`
 
+### Market-order simulation
+
+Sweep the book with a market order and see the real fill — VWAP price, slippage
+and any unfilled size (read-only, the book isn't touched):
+
+```ts
+import { simulateMarketOrder } from "orderflow-metrics";
+
+const r = simulateMarketOrder(ob, "buy", 4);
+r.avgPrice;      // volume-weighted fill price
+r.slippageBps;   // cost vs mid, in basis points
+r.remainingSize; // > 0 if the book was too thin
+```
+
 ## Tests
 
 ```bash
