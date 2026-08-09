@@ -203,6 +203,20 @@ r.slippageBps;   // cost vs mid, in basis points
 r.remainingSize; // > 0 if the book was too thin
 ```
 
+## Execution scheduling
+
+Split a parent order into child slices:
+
+```ts
+import { twap, pov } from "orderflow-metrics";
+
+twap(100, 4);                       // [25, 25, 25, 25] — even time slices
+pov(30, [100, 100, 100], 0.1);      // [10, 10, 10] — 10% of each interval's volume
+```
+
+- `twap` — time-weighted: even slices that sum exactly to the parent size
+- `pov` — percentage-of-volume: participate at a fixed fraction of each interval
+
 ## Tests
 
 ```bash

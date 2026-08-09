@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.11.0] - 2026-08-05
+
+### Added
+- Execution scheduling: `twap(totalSize, slices)` (even time-weighted slices,
+  exact sum) and `pov(totalSize, intervalVolumes, rate)` (percentage-of-volume
+  participation with shortfall handling). Test suite included.
+
 ## [0.10.0] - 2026-08-05
 
 ### Added
