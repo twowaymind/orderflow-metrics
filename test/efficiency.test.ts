@@ -33,4 +33,5 @@ test("variance ratio degenerate input returns 1", () => {
   assert.equal(varianceRatio([], 2), 1);
   assert.equal(varianceRatio([0.1], 3), 1);
   assert.equal(varianceRatio([2, 2, 2, 2], 2), 1); // zero variance
+  assert.equal(varianceRatio([0.1, -0.2, 0.3], 3), 1); // q === length -> degenerate
 });

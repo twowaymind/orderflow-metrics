@@ -38,7 +38,9 @@ export function autocorrelation(returns: readonly number[], lag: number): number
  */
 export function varianceRatio(returns: readonly number[], q: number): number {
   const n = returns.length;
-  if (q < 1 || n < q) return 1;
+  // Need at least two overlapping q-period returns for a meaningful variance,
+  // i.e. n > q. At n <= q the estimate is degenerate — return 1 (random walk).
+  if (q < 1 || n <= q) return 1;
 
   const mean = returns.reduce((a, b) => a + b, 0) / n;
   let var1 = 0;
