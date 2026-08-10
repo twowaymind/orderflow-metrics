@@ -5,8 +5,10 @@
 [![Node](https://img.shields.io/badge/node-22%2B-brightgreen.svg)](package.json)
 
 Microstructure **order-flow metrics** in dependency-free TypeScript: Order Flow
-Imbalance (OFI) and top-of-book / trade imbalance. Runs on Node 22+ with no
-build step and no runtime dependencies.
+Imbalance (OFI), VPIN, information-driven bars, transaction-cost / price-impact
+metrics, trade-sign classification, limit-order-book reconstruction and
+execution scheduling. Runs on Node 22+ with no build step and no runtime
+dependencies.
 
 ## Install
 
@@ -77,6 +79,7 @@ vpin(buckets, { window: 50 }); // flow toxicity in [0, 1]
 - `bucketByVolume(trades, bucketSize)` — split a trade stream into equal-volume buckets
 - `bvcBuyFraction(priceChange, sigma)` — BVC buy fraction Φ(ΔP/σ)
 - `vpin(buckets, { window, sigma })` — VPIN over the last `window` buckets
+- `standardNormalCdf(z)` — Φ, the standard normal CDF (Abramowitz & Stegun 7.1.26)
 
 ## Execution cost & price impact
 
@@ -216,6 +219,40 @@ pov(30, [100, 100, 100], 0.1);      // [10, 10, 10] — 10% of each interval's v
 
 - `twap` — time-weighted: even slices that sum exactly to the parent size
 - `pov` — percentage-of-volume: participate at a fixed fraction of each interval
+
+## Information-driven bars
+
+Sampling trades on a fixed time grid oversamples quiet periods and produces
+non-IID returns. Sampling on **activity** instead — a bar every N ticks, N
+units of volume, or N units of traded value — gives bars with much better
+statistical properties (López de Prado, *Advances in Financial ML*, ch. 2).
+Build them first, then run the other metrics on the resulting series.
+
+```ts
+import { tickBars, volumeBars, dollarBars } from "orderflow-metrics";
+
+const trades = [
+  { price: 100, size: 3, side: "buy" },
+  { price: 101, size: 4, side: "buy" },
+  { price: 100, size: 2, side: "sell" },
+  { price: 102, size: 5, side: "sell" },
+];
+
+tickBars(trades, 2);      // one bar per 2 trades
+volumeBars(trades, 5);    // new bar each time cumulative size ≥ 5
+dollarBars(trades, 500);  // new bar each time cumulative price·size ≥ 500
+```
+
+Each `Bar` carries `open`/`high`/`low`/`close`, `volume`, `dollar` (traded
+value), `vwap`, `ticks`, and signed `buyVolume` / `sellVolume` (plus `start` /
+`end` timestamps when the feed provides them). The trade that crosses the
+threshold is included whole (never split), and a trailing partial bar is
+dropped. Dollar bars are usually preferred — they are the most robust of the
+three to changes in price level.
+
+- `tickBars(trades, threshold)` — a bar every `threshold` trades
+- `volumeBars(trades, threshold)` — a bar every `threshold` units of volume
+- `dollarBars(trades, threshold)` — a bar every `threshold` units of traded value
 
 ## Tests
 

@@ -1,6 +1,23 @@
 # Changelog
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
+This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
+public API may still change between minor versions.
+
+## [0.12.0] - 2026-08-10
+
+### Added
+- Information-driven bars (López de Prado, 2018): `tickBars`, `volumeBars` and
+  `dollarBars` aggregate a raw trade stream into OHLCV bars sampled on activity
+  rather than clock time — the natural upstream sampling layer for OFI,
+  imbalance, volatility and VPIN. Each `Bar` carries open/high/low/close,
+  volume, traded value, VWAP, tick count and signed buy/sell volume. Test
+  suite included.
+
+### Fixed
+- `varianceRatio` now returns 1 (the documented degenerate value) when
+  `q === returns.length`. Previously that case produced a spurious 0 because
+  the variance of a single overlapping q-period return is zero.
 
 ## [0.11.0] - 2026-08-05
 

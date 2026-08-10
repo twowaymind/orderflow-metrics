@@ -33,3 +33,5 @@ export { OrderBook } from "./orderbook.ts";
 export type { Fill, MarketOrderResult } from "./simulate.ts";
 export { simulateMarketOrder } from "./simulate.ts";
 export { twap, pov } from "./scheduling.ts";
+export type { Bar } from "./bars.ts";
+export { tickBars, volumeBars, dollarBars } from "./bars.ts";

@@ -1,7 +1,7 @@
 {
   "name": "orderflow-metrics",
-  "version": "0.11.0",
-  "description": "Microstructure metrics in dependency-free TypeScript — OFI, VPIN, spreads, price impact, Kyle's lambda, weighted mid, trade-sign classification, Amihud illiquidity.",
+  "version": "0.12.0",
+  "description": "Microstructure metrics in dependency-free TypeScript — OFI, VPIN, information-driven bars, spreads, price impact, Kyle's lambda, weighted mid, trade-sign classification, Amihud illiquidity.",
   "type": "module",
   "exports": "./src/index.ts",
   "scripts": {
@@ -12,7 +12,10 @@
     "market-microstructure",
     "order-flow-imbalance",
     "ofi",
+    "vpin",
     "order-book",
+    "information-driven-bars",
+    "dollar-bars",
     "hft",
     "trading",
     "quantitative-finance",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://twowaymind.com",
   "devDependencies": {
+    "@types/node": "^22.5.0",
     "typescript": "^5.5.0"
   }
 }
