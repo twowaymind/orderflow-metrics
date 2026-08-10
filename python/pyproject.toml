@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "orderflow-metrics"
+version = "0.1.0"
+description = "Dependency-free market-microstructure metrics in Python — OFI, VPIN, information-driven bars, price impact, Kyle's lambda, trade-sign classification, order-book reconstruction."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "TwoWayMind (RATE LTD)" }]
+keywords = [
+  "market-microstructure",
+  "order-flow-imbalance",
+  "ofi",
+  "vpin",
+  "order-book",
+  "information-driven-bars",
+  "dollar-bars",
+  "quantitative-finance",
+  "trading",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial :: Investment",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.urls]
+Homepage = "https://twowaymind.com"
+Repository = "https://github.com/twowaymind/orderflow-metrics"
+Issues = "https://github.com/twowaymind/orderflow-metrics/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/orderflow_metrics"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

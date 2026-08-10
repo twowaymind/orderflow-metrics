@@ -254,6 +254,18 @@ three to changes in price level.
 - `volumeBars(trades, threshold)` — a bar every `threshold` units of volume
 - `dollarBars(trades, threshold)` — a bar every `threshold` units of traded value
 
+## Python
+
+A dependency-free Python port lives in [`python/`](python/) and ships the same
+metrics (OFI, VPIN, information-driven bars, spreads, price impact, order-book
+reconstruction). Install from PyPI:
+
+```bash
+pip install orderflow-metrics
+```
+
+See [python/README.md](python/README.md) for the Python API.
+
 ## Tests
 
 ```bash
