@@ -6,13 +6,35 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["22.x", "24.x"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run tests
+        run: node --experimental-strip-types --test
+
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
-      - name: Run tests
-        run: node --experimental-strip-types --test
+      - name: Install dev dependencies
+        run: npm install --no-save typescript @types/node
+      - name: Type-check
+        run: npx tsc --noEmit
