@@ -20,6 +20,16 @@ from .execution import (
 )
 from .fairvalue import mid, relative_spread_bps, weighted_mid
 from .imbalance import depth_imbalance, trade_imbalance
+from .impact import (
+    ImpactCost,
+    MarkoutObservation,
+    almgren_chriss_cost,
+    average_markout,
+    linear_permanent_impact,
+    linear_temporary_impact,
+    markout,
+    square_root_impact,
+)
 from .liquidity import ReturnVolume, amihud_illiquidity
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
@@ -39,7 +49,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     # types
@@ -101,5 +111,14 @@ __all__ = [
     "volume_bars",
     "dollar_bars",
     "Bar",
+    # impact
+    "square_root_impact",
+    "linear_permanent_impact",
+    "linear_temporary_impact",
+    "almgren_chriss_cost",
+    "markout",
+    "average_markout",
+    "ImpactCost",
+    "MarkoutObservation",
     "__version__",
 ]

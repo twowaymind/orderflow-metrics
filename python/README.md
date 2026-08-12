@@ -163,6 +163,21 @@ twap(100, 4)                    # [25, 25, 25, 25] — even time slices
 pov(30, [100, 100, 100], 0.1)   # [10, 10, 10] — 10% of each interval's volume
 ```
 
+## Market impact
+
+```python
+from orderflow_metrics import square_root_impact, almgren_chriss_cost, markout
+
+square_root_impact(0.02, 1_000, 1_000_000)    # Y·σ·√(Q/V) — empirical impact
+almgren_chriss_cost(10_000, 30, 1e-6, 2e-7)   # ImpactCost(permanent, temporary, total)
+markout("buy", 100, 100.5)                    # +0.5 — price moved with the trade
+```
+
+- `square_root_impact` — the empirical square-root law of impact
+- `linear_permanent_impact` / `linear_temporary_impact` — Almgren-Chriss terms
+- `almgren_chriss_cost` — expected TWAP cost, split into permanent vs temporary
+- `markout` / `average_markout` — realized post-trade adverse-selection drift
+
 ## Tests
 
 ```bash

@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.13.0] - 2026-08-10
+
+### Added
+- Market-impact models and trade markouts (`impact`): `squareRootImpact` (the
+  empirical Y·σ·√(Q/V) law), `linearPermanentImpact` and
+  `linearTemporaryImpact`, `almgrenChrissCost` (TWAP permanent/temporary cost
+  split), and `markout` / `averageMarkout` (post-trade adverse-selection drift,
+  signed by trade direction). Test suite included.
+
 ## [0.12.0] - 2026-08-10
 
 ### Added

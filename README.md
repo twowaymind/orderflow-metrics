@@ -254,6 +254,23 @@ three to changes in price level.
 - `volumeBars(trades, threshold)` — a bar every `threshold` units of volume
 - `dollarBars(trades, threshold)` — a bar every `threshold` units of traded value
 
+## Market impact
+
+Pre-trade cost models and post-trade markouts:
+
+```ts
+import { squareRootImpact, almgrenChrissCost, markout } from "orderflow-metrics";
+
+squareRootImpact(0.02, 1_000, 1_000_000);   // Y·σ·√(Q/V) — empirical impact
+almgrenChrissCost(10_000, 30, 1e-6, 2e-7);  // { permanent, temporary, total }
+markout("buy", 100, 100.5);                 // +0.5 — price moved with the trade
+```
+
+- `squareRootImpact` — the empirical square-root law of impact
+- `linearPermanentImpact` / `linearTemporaryImpact` — Almgren-Chriss impact terms
+- `almgrenChrissCost` — expected TWAP cost, split into permanent vs temporary
+- `markout` / `averageMarkout` — realized post-trade adverse-selection drift
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same

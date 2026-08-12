@@ -35,3 +35,12 @@ export { simulateMarketOrder } from "./simulate.ts";
 export { twap, pov } from "./scheduling.ts";
 export type { Bar } from "./bars.ts";
 export { tickBars, volumeBars, dollarBars } from "./bars.ts";
+export type { ImpactCost, MarkoutObservation } from "./impact.ts";
+export {
+  squareRootImpact,
+  linearPermanentImpact,
+  linearTemporaryImpact,
+  almgrenChrissCost,
+  markout,
+  averageMarkout,
+} from "./impact.ts";
