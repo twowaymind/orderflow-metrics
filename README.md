@@ -271,6 +271,22 @@ markout("buy", 100, 100.5);                 // +0.5 — price moved with the tra
 - `almgrenChrissCost` — expected TWAP cost, split into permanent vs temporary
 - `markout` / `averageMarkout` — realized post-trade adverse-selection drift
 
+## Implementation shortfall
+
+Execution-quality analytics against a decision / arrival benchmark:
+
+```ts
+import { implementationShortfall, arrivalSlippageBps } from "orderflow-metrics";
+
+implementationShortfall("buy", 100, 100.5, 800, 1000, 101, 5);
+// { execution: 400, opportunity: 200, fees: 5, total: 605 }
+
+arrivalSlippageBps("buy", 100, 100.5);   // 50 bps paid up vs arrival
+```
+
+- `implementationShortfall` — Perold's execution + opportunity + fees decomposition
+- `arrivalSlippageBps` — signed slippage of the fill vs the arrival price
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same

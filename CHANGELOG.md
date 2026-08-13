@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.14.0] - 2026-08-12
+
+### Added
+- Implementation shortfall & arrival slippage (`shortfall`):
+  `implementationShortfall` (Perold's decomposition into execution cost,
+  opportunity cost and fees) and `arrivalSlippageBps` (signed slippage vs the
+  arrival price, in basis points). Test suite included.
+
 ## [0.13.0] - 2026-08-10
 
 ### Added

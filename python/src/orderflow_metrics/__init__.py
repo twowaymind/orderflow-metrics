@@ -31,6 +31,7 @@ from .impact import (
     square_root_impact,
 )
 from .liquidity import ReturnVolume, amihud_illiquidity
+from .shortfall import ShortfallResult, arrival_slippage_bps, implementation_shortfall
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -49,7 +50,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     # types
@@ -120,5 +121,9 @@ __all__ = [
     "average_markout",
     "ImpactCost",
     "MarkoutObservation",
+    # shortfall
+    "implementation_shortfall",
+    "arrival_slippage_bps",
+    "ShortfallResult",
     "__version__",
 ]

@@ -44,3 +44,5 @@ export {
   markout,
   averageMarkout,
 } from "./impact.ts";
+export type { ShortfallResult } from "./shortfall.ts";
+export { implementationShortfall, arrivalSlippageBps } from "./shortfall.ts";

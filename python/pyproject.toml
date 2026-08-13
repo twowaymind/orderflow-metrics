@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "orderflow-metrics"
-version = "0.2.0"
+version = "0.3.0"
 description = "Dependency-free market-microstructure metrics in Python — OFI, VPIN, information-driven bars, market impact (square-root & Almgren-Chriss), markouts, price impact, Kyle's lambda, trade-sign classification, order-book reconstruction."
 readme = "README.md"
 requires-python = ">=3.9"

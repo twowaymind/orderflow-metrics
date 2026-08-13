@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.3.0] - 2026-08-12
+
+### Added
+- Implementation shortfall & arrival slippage (`shortfall`):
+  `implementation_shortfall` (Perold's decomposition into execution cost,
+  opportunity cost and fees) and `arrival_slippage_bps` (signed slippage vs the
+  arrival price, in basis points). Test suite included. Feature parity with the
+  TypeScript v0.14.0 release.
+
 ## [0.2.0] - 2026-08-10
 
 ### Added

@@ -178,6 +178,20 @@ markout("buy", 100, 100.5)                    # +0.5 — price moved with the tr
 - `almgren_chriss_cost` — expected TWAP cost, split into permanent vs temporary
 - `markout` / `average_markout` — realized post-trade adverse-selection drift
 
+## Implementation shortfall
+
+```python
+from orderflow_metrics import implementation_shortfall, arrival_slippage_bps
+
+implementation_shortfall("buy", 100, 100.5, 800, 1000, 101, 5)
+# ShortfallResult(execution=400, opportunity=200, fees=5, total=605)
+
+arrival_slippage_bps("buy", 100, 100.5)   # 50 bps paid up vs arrival
+```
+
+- `implementation_shortfall` — Perold's execution + opportunity + fees decomposition
+- `arrival_slippage_bps` — signed slippage of the fill vs the arrival price
+
 ## Tests
 
 ```bash
