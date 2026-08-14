@@ -46,3 +46,5 @@ export {
 } from "./impact.ts";
 export type { ShortfallResult } from "./shortfall.ts";
 export { implementationShortfall, arrivalSlippageBps } from "./shortfall.ts";
+export type { Ohlc } from "./spreadest.ts";
+export { corwinSchultz, abdiRanaldo } from "./spreadest.ts";

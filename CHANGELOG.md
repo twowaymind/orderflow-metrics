@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.15.0] - 2026-08-13
+
+### Added
+- OHLC bid-ask spread estimators (`spreadest`): `corwinSchultz` (Corwin &
+  Schultz, 2012 — the two-day high-low range estimator) and `abdiRanaldo`
+  (Abdi & Ranaldo, 2017 — close vs the high-low mid-range). Recover the
+  effective proportional spread from daily high/low/close with no tick data;
+  negative estimates are floored at 0. Test suite included. (Python: 0.4.0.)
+
 ## [0.14.0] - 2026-08-12
 
 ### Added

@@ -32,6 +32,7 @@ from .impact import (
 )
 from .liquidity import ReturnVolume, amihud_illiquidity
 from .shortfall import ShortfallResult, arrival_slippage_bps, implementation_shortfall
+from .spreadest import Ohlc, abdi_ranaldo, corwin_schultz
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -50,7 +51,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 __all__ = [
     # types
@@ -125,5 +126,9 @@ __all__ = [
     "implementation_shortfall",
     "arrival_slippage_bps",
     "ShortfallResult",
+    # spread estimators
+    "corwin_schultz",
+    "abdi_ranaldo",
+    "Ohlc",
     "__version__",
 ]

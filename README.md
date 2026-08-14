@@ -287,6 +287,30 @@ arrivalSlippageBps("buy", 100, 100.5);   // 50 bps paid up vs arrival
 - `implementationShortfall` — Perold's execution + opportunity + fees decomposition
 - `arrivalSlippageBps` — signed slippage of the fill vs the arrival price
 
+## Spread estimators (from OHLC)
+
+Recover the effective bid-ask spread when all you have is daily high, low, and
+close — no tick data required:
+
+```ts
+import { corwinSchultz, abdiRanaldo } from "orderflow-metrics";
+
+const bars = [
+  { high: 10.2, low: 9.8, close: 10.18 },
+  { high: 10.25, low: 9.85, close: 9.88 },
+  { high: 10.3, low: 9.9, close: 10.27 },
+];
+
+corwinSchultz(bars);   // proportional spread from the two-day high-low range
+abdiRanaldo(bars);     // proportional spread from close vs high-low mid-range
+```
+
+- `corwinSchultz` — Corwin & Schultz (2012) high-low estimator
+- `abdiRanaldo` — Abdi & Ranaldo (2017) close/high/low estimator
+
+Both return a proportional spread (a fraction of price); negative estimates are
+floored at 0.
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same
