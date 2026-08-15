@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.16.0] - 2026-08-14
+
+### Added
+- Range-based volatility estimators (`rangevol`): `parkinsonVolatility`
+  (Parkinson 1980, high-low), `garmanKlassVolatility` (Garman-Klass 1980, OHLC),
+  `rogersSatchellVolatility` (Rogers-Satchell 1991, drift-independent), and
+  `yangZhangVolatility` (Yang-Zhang 2000, drift- and jump-robust). Each returns
+  per-bar volatility from OHLC candles. Test suite included. (Python: 0.5.0.)
+
 ## [0.15.0] - 2026-08-13
 
 ### Added

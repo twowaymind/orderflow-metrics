@@ -311,6 +311,39 @@ abdiRanaldo(bars);     // proportional spread from close vs high-low mid-range
 Both return a proportional spread (a fraction of price); negative estimates are
 floored at 0.
 
+## Range-based volatility (from OHLC)
+
+Estimate volatility from the open, high, low, and close — far more efficient than
+close-to-close when you have candles:
+
+```ts
+import {
+  parkinsonVolatility,
+  garmanKlassVolatility,
+  rogersSatchellVolatility,
+  yangZhangVolatility,
+} from "orderflow-metrics";
+
+const candles = [
+  { open: 100, high: 105, low: 99, close: 102 },
+  { open: 102, high: 106, low: 101, close: 104 },
+  { open: 104, high: 104, low: 98, close: 99 },
+];
+
+parkinsonVolatility(candles);       // high-low range
+garmanKlassVolatility(candles);     // adds open & close
+rogersSatchellVolatility(candles);  // drift-independent
+yangZhangVolatility(candles);       // + overnight jumps (needs >= 3 bars)
+```
+
+- `parkinsonVolatility` — Parkinson (1980), high-low range
+- `garmanKlassVolatility` — Garman & Klass (1980), OHLC
+- `rogersSatchellVolatility` — Rogers & Satchell (1991), drift-independent
+- `yangZhangVolatility` — Yang & Zhang (2000), drift- and jump-robust
+
+Each returns the volatility (standard deviation) per bar; multiply the variance
+by bars-per-year to annualize.
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same

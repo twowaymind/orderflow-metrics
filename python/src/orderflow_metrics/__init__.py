@@ -33,6 +33,13 @@ from .impact import (
 from .liquidity import ReturnVolume, amihud_illiquidity
 from .shortfall import ShortfallResult, arrival_slippage_bps, implementation_shortfall
 from .spreadest import Ohlc, abdi_ranaldo, corwin_schultz
+from .rangevol import (
+    Candle,
+    garman_klass_volatility,
+    parkinson_volatility,
+    rogers_satchell_volatility,
+    yang_zhang_volatility,
+)
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -51,7 +58,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 __all__ = [
     # types
@@ -130,5 +137,11 @@ __all__ = [
     "corwin_schultz",
     "abdi_ranaldo",
     "Ohlc",
+    # range-based volatility
+    "parkinson_volatility",
+    "garman_klass_volatility",
+    "rogers_satchell_volatility",
+    "yang_zhang_volatility",
+    "Candle",
     "__version__",
 ]
