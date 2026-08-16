@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.17.0] - 2026-08-14
+
+### Added
+- Hurst exponent (`hurst`): `hurstExponent` estimates long-memory from a return
+  series via rescaled-range (R/S) analysis — >0.5 persistent/trending, <0.5
+  mean-reverting, ~0.5 random walk. A companion to the market-efficiency
+  metrics (variance ratio, autocorrelation). Test suite included.
+  (Python: 0.6.0.)
+
 ## [0.16.0] - 2026-08-14
 
 ### Added

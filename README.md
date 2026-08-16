@@ -344,6 +344,22 @@ yangZhangVolatility(candles);       // + overnight jumps (needs >= 3 bars)
 Each returns the volatility (standard deviation) per bar; multiply the variance
 by bars-per-year to annualize.
 
+## Hurst exponent
+
+Detect long-memory — trending vs mean-reverting — from a return series via
+rescaled-range (R/S) analysis:
+
+```ts
+import { hurstExponent } from "orderflow-metrics";
+
+hurstExponent(returns);
+// ~0.5 random walk · >0.5 persistent/trending · <0.5 mean-reverting
+// NaN if the series is too short (needs ~32+ points)
+```
+
+- `hurstExponent` — R/S Hurst estimate; a companion to `varianceRatio` and
+  `autocorrelation` for gauging market efficiency
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same

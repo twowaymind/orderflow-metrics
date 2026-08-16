@@ -40,6 +40,7 @@ from .rangevol import (
     rogers_satchell_volatility,
     yang_zhang_volatility,
 )
+from .hurst import hurst_exponent
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -58,7 +59,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 __all__ = [
     # types
@@ -143,5 +144,7 @@ __all__ = [
     "rogers_satchell_volatility",
     "yang_zhang_volatility",
     "Candle",
+    # hurst
+    "hurst_exponent",
     "__version__",
 ]

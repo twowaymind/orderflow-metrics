@@ -55,3 +55,5 @@ export {
   rogersSatchellVolatility,
   yangZhangVolatility,
 } from "./rangevol.ts";
+export type { HurstOptions } from "./hurst.ts";
+export { hurstExponent } from "./hurst.ts";
