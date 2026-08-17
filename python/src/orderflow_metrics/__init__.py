@@ -41,6 +41,7 @@ from .rangevol import (
     yang_zhang_volatility,
 )
 from .hurst import hurst_exponent
+from .moments import realized_kurtosis, realized_skewness
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -59,7 +60,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = [
     # types
@@ -146,5 +147,8 @@ __all__ = [
     "Candle",
     # hurst
     "hurst_exponent",
+    # realized moments
+    "realized_skewness",
+    "realized_kurtosis",
     "__version__",
 ]

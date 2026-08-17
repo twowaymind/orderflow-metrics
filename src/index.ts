@@ -57,3 +57,4 @@ export {
 } from "./rangevol.ts";
 export type { HurstOptions } from "./hurst.ts";
 export { hurstExponent } from "./hurst.ts";
+export { realizedSkewness, realizedKurtosis } from "./moments.ts";

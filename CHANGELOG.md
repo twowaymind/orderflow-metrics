@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.18.0] - 2026-08-17
+
+### Added
+- Realized higher moments (`moments`): `realizedSkewness` and `realizedKurtosis`
+  summarise the asymmetry and tail heaviness of an intraday return series
+  (Amaya, Christoffersen, Jacobs & Vasquez, 2015), scaled to be comparable
+  across sampling frequencies. Test suite included. (Python: 0.7.0.)
+
 ## [0.17.0] - 2026-08-14
 
 ### Added

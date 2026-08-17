@@ -360,6 +360,22 @@ hurstExponent(returns);
 - `hurstExponent` — R/S Hurst estimate; a companion to `varianceRatio` and
   `autocorrelation` for gauging market efficiency
 
+## Realized moments
+
+Higher moments of the intraday return distribution (Amaya et al., 2015):
+
+```ts
+import { realizedSkewness, realizedKurtosis } from "orderflow-metrics";
+
+realizedSkewness(returns);  // √N · Σr³ / RV^1.5  — intraday asymmetry
+realizedKurtosis(returns);  // N · Σr⁴ / RV²      — intraday tail heaviness
+```
+
+- `realizedSkewness` — asymmetry of the intraday return distribution
+- `realizedKurtosis` — tail heaviness of the intraday return distribution
+
+Both return 0 for an empty or zero-variance series.
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same
