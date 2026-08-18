@@ -1,6 +1,6 @@
 {
   "name": "orderflow-metrics",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "Microstructure metrics in dependency-free TypeScript — OFI, VPIN, information-driven bars, market impact (square-root & Almgren-Chriss), markouts, implementation shortfall, high-low spread estimators (Corwin-Schultz, Abdi-Ranaldo), range-based volatility (Parkinson, Garman-Klass, Rogers-Satchell, Yang-Zhang), Hurst exponent, realized skewness & kurtosis, Kyle's lambda, trade-sign classification, Amihud illiquidity.",
   "type": "module",
   "exports": "./src/index.ts",

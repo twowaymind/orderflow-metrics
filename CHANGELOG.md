@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.18.1] - 2026-08-18
+
+### Changed
+- Docs only (no API changes): grouped **metric navigation** (a table of contents
+  by metric family) at the top of the README, and runnable, dependency-free
+  **quickstart examples** (TypeScript + Python) under `examples/`. Both tour the
+  library end to end on deterministic synthetic data and print identical output,
+  demonstrating TS/Python parity. (Python: 0.7.1.)
+
 ## [0.18.0] - 2026-08-17
 
 ### Added

@@ -10,6 +10,19 @@ metrics, trade-sign classification, limit-order-book reconstruction and
 execution scheduling. Runs on Node 22+ with no build step and no runtime
 dependencies.
 
+## Metrics
+
+- **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification)
+- **Bars & sampling** — [Information-driven bars](#information-driven-bars)
+- **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
+- **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
+- **Order book** — [Order book](#order-book)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments)
+- **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
+- **Liquidity** — [Liquidity](#liquidity)
+
+Runnable quickstarts live in [`examples/`](examples/).
+
 ## Install
 
 ```bash
@@ -37,6 +50,19 @@ tradeImbalance([
   { price: 100, size: 1, side: "sell" },
 ]); // 0.333
 ```
+
+## Examples
+
+Runnable, dependency-free quickstarts that tour the library end-to-end on
+deterministic synthetic data live in [`examples/`](examples/):
+
+```bash
+node --experimental-strip-types examples/quickstart.ts   # TypeScript
+python examples/quickstart.py                            # Python
+```
+
+Both use the same seeded data and print the same numbers — a quick check that
+the two ports agree.
 
 ## Order Flow Imbalance
 
