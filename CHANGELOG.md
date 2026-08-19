@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.19.0] - 2026-08-19
+
+### Added
+- Jump detection via bipower variation (`jumps`): `bipowerVariation`
+  ((π/2)·Σ|rᵢ₋₁||rᵢ|, a jump-robust estimate of continuous variance),
+  `jumpVariation` (max(RV − BV, 0)) and `relativeJumpVariation` (jump share of
+  realized variance, in [0,1]) — Barndorff-Nielsen & Shephard (2004). Test suite
+  included. (Python: 0.8.0.)
+
 ## [0.18.1] - 2026-08-18
 
 ### Changed

@@ -58,3 +58,8 @@ export {
 export type { HurstOptions } from "./hurst.ts";
 export { hurstExponent } from "./hurst.ts";
 export { realizedSkewness, realizedKurtosis } from "./moments.ts";
+export {
+  bipowerVariation,
+  jumpVariation,
+  relativeJumpVariation,
+} from "./jumps.ts";

@@ -17,7 +17,7 @@ dependencies.
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
 - **Liquidity** — [Liquidity](#liquidity)
 
@@ -401,6 +401,27 @@ realizedKurtosis(returns);  // N · Σr⁴ / RV²      — intraday tail heavine
 - `realizedKurtosis` — tail heaviness of the intraday return distribution
 
 Both return 0 for an empty or zero-variance series.
+
+## Jumps & bipower variation
+
+Split realized variance into its continuous (diffusive) part and its jump part
+(Barndorff-Nielsen & Shephard, 2004). Bipower variation is jump-robust because
+multiplying adjacent absolute returns damps a lone spike:
+
+```ts
+import { bipowerVariation, jumpVariation, relativeJumpVariation } from "orderflow-metrics";
+
+bipowerVariation(returns);       // (π/2)·Σ|rᵢ₋₁||rᵢ| — continuous variance
+jumpVariation(returns);          // max(RV − BV, 0)    — variance from jumps
+relativeJumpVariation(returns);  // jump share of RV, in [0, 1]
+```
+
+- `bipowerVariation` — jump-robust estimate of continuous variance
+- `jumpVariation` — the realized-variance contribution of discrete jumps
+- `relativeJumpVariation` — that jump contribution as a fraction of RV
+
+All three return 0 for fewer than two returns (and a jumpless series gives a jump
+variation of 0).
 
 ## Python
 
