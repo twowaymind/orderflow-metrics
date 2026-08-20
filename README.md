@@ -17,7 +17,7 @@ dependencies.
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
 - **Liquidity** — [Liquidity](#liquidity)
 
@@ -422,6 +422,31 @@ relativeJumpVariation(returns);  // jump share of RV, in [0, 1]
 
 All three return 0 for fewer than two returns (and a jumpless series gives a jump
 variation of 0).
+
+## Realized semivariance
+
+Realized variance treats an up-move and a down-move of equal size as identical
+risk. Realized semivariance splits it by the *sign* of each return, isolating
+downside ("bad") from upside ("good") volatility — Barndorff-Nielsen,
+Kinnebrock & Shephard (2010) and Patton & Shephard (2015):
+
+```ts
+import {
+  realizedSemivariance,
+  downsideVarianceRatio,
+  signedJumpVariation,
+} from "orderflow-metrics";
+
+realizedSemivariance(returns); // { upside: Σr²·1{r>0}, downside: Σr²·1{r<0} }
+downsideVarianceRatio(returns); // RS⁻ / (RS⁺ + RS⁻), in [0, 1]
+signedJumpVariation(returns);   // RS⁺ − RS⁻ — keeps the direction of jump risk
+```
+
+- `realizedSemivariance` — upside/downside split (their sum is realized variance)
+- `downsideVarianceRatio` — the negative-return share of RV; > 0.5 is downside-heavy
+- `signedJumpVariation` — RS⁺ − RS⁻; positive when upside dominates, negative when downside does
+
+Zero returns contribute to neither half, and an empty series returns zeros.
 
 ## Python
 

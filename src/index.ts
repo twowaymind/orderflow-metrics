@@ -63,3 +63,9 @@ export {
   jumpVariation,
   relativeJumpVariation,
 } from "./jumps.ts";
+export type { Semivariance } from "./semivar.ts";
+export {
+  realizedSemivariance,
+  downsideVarianceRatio,
+  signedJumpVariation,
+} from "./semivar.ts";

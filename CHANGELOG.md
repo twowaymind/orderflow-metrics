@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.20.0] - 2026-08-20
+
+### Added
+- Realized semivariance (`semivar`): `realizedSemivariance` (splits realized
+  variance into upside RS⁺ = Σrᵢ²·1{rᵢ>0} and downside RS⁻ = Σrᵢ²·1{rᵢ<0}, whose
+  sum is RV), `downsideVarianceRatio` (RS⁻ share of RV, in [0,1]) and
+  `signedJumpVariation` (RS⁺ − RS⁻, which keeps the *direction* of jump risk) —
+  Barndorff-Nielsen, Kinnebrock & Shephard (2010) and Patton & Shephard (2015).
+  Test suite included. (Python: 0.9.0.)
+
 ## [0.19.0] - 2026-08-19
 
 ### Added

@@ -43,6 +43,12 @@ from .rangevol import (
 from .hurst import hurst_exponent
 from .moments import realized_kurtosis, realized_skewness
 from .jumps import bipower_variation, jump_variation, relative_jump_variation
+from .semivar import (
+    Semivariance,
+    downside_variance_ratio,
+    realized_semivariance,
+    signed_jump_variation,
+)
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -61,7 +67,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 __all__ = [
     # types
@@ -155,5 +161,10 @@ __all__ = [
     "bipower_variation",
     "jump_variation",
     "relative_jump_variation",
+    # realized semivariance
+    "realized_semivariance",
+    "downside_variance_ratio",
+    "signed_jump_variation",
+    "Semivariance",
     "__version__",
 ]
