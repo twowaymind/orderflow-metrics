@@ -12,7 +12,7 @@ dependencies.
 
 ## Metrics
 
-- **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification)
+- **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification) · [Order-flow entropy](#order-flow-entropy)
 - **Bars & sampling** — [Information-driven bars](#information-driven-bars)
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
@@ -447,6 +447,28 @@ signedJumpVariation(returns);   // RS⁺ − RS⁻ — keeps the direction of ju
 - `signedJumpVariation` — RS⁺ − RS⁻; positive when upside dominates, negative when downside does
 
 Zero returns contribute to neither half, and an empty series returns zeros.
+
+## Order-flow entropy
+
+Shannon entropy of order flow measures how *predictable* a stream of trades or
+returns is. One-sided flow (nearly all buys, or a series that only ticks up)
+carries little surprise — low entropy — and is easier to anticipate; balanced,
+unpredictable flow sits at maximum entropy. Persistently low flow entropy is a
+signature of directional, potentially informed activity. Reported in bits:
+
+```ts
+import { shannonEntropy, normalizedEntropy, signEntropy } from "orderflow-metrics";
+
+shannonEntropy([3, 1]);         // 0.811… bits  — H of a count/probability vector
+normalizedEntropy([2, 1, 1]);   // 0.946        — H / log₂(k), in [0, 1]
+signEntropy(returns);           // up/down balance of a series, in [0, 1] bits
+```
+
+- `shannonEntropy` — H = −Σ pᵢ log₂ pᵢ over positive weights; two equal outcomes = 1 bit
+- `normalizedEntropy` — that entropy scaled by log₂(k) so distributions of different sizes compare
+- `signEntropy` — 1 bit is perfectly balanced two-sided flow, near 0 is one-sided and predictable
+
+Zero and negative weights are ignored, and fewer than two live categories returns 0.
 
 ## Python
 

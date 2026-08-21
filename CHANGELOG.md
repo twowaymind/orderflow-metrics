@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.21.0] - 2026-08-21
+
+### Added
+- Order-flow entropy (`entropy`): `shannonEntropy` (H = −Σpᵢ·log₂pᵢ, in bits,
+  of a count/probability vector), `normalizedEntropy` (H / log₂k, in [0,1]) and
+  `signEntropy` (the up/down balance of a return or signed-flow series, in [0,1]
+  bits). A predictability / informativeness measure — persistently low flow
+  entropy marks one-sided, potentially informed activity. Test suite included.
+  (Python: 0.10.0.)
+
 ## [0.20.0] - 2026-08-20
 
 ### Added

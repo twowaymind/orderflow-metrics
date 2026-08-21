@@ -49,6 +49,7 @@ from .semivar import (
     realized_semivariance,
     signed_jump_variation,
 )
+from .entropy import normalized_entropy, shannon_entropy, sign_entropy
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -67,7 +68,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 __all__ = [
     # types
@@ -166,5 +167,9 @@ __all__ = [
     "downside_variance_ratio",
     "signed_jump_variation",
     "Semivariance",
+    # order-flow entropy
+    "shannon_entropy",
+    "normalized_entropy",
+    "sign_entropy",
     "__version__",
 ]

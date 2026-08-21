@@ -69,3 +69,8 @@ export {
   downsideVarianceRatio,
   signedJumpVariation,
 } from "./semivar.ts";
+export {
+  shannonEntropy,
+  normalizedEntropy,
+  signEntropy,
+} from "./entropy.ts";
