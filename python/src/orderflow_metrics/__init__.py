@@ -50,6 +50,7 @@ from .semivar import (
     signed_jump_variation,
 )
 from .entropy import normalized_entropy, shannon_entropy, sign_entropy
+from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -68,7 +69,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 __all__ = [
     # types
@@ -171,5 +172,10 @@ __all__ = [
     "shannon_entropy",
     "normalized_entropy",
     "sign_entropy",
+    # online / streaming estimators
+    "Welford",
+    "Ewma",
+    "EwmaVariance",
+    "RollingWindow",
     "__version__",
 ]

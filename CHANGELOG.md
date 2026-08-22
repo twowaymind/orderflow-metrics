@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.22.0] - 2026-08-22
+
+### Added
+- Online / streaming estimators (`online`) — O(1)-per-update, constant-memory
+  stateful estimators for live pipelines, numerically stable (Welford / West,
+  not the naive Σx² form):
+  - `Welford` — running mean & variance over all data (sample and population).
+  - `Ewma` — exponentially weighted moving average of a level.
+  - `EwmaVariance` — RiskMetrics-style EWMA variance / volatility (λ decay).
+  - `RollingWindow` — mean & variance over a fixed trailing window, with O(1)
+    add/remove (West 1979).
+  Each is validated in tests to equal a batch recomputation at every step.
+  (Python: 0.11.0.)
+
 ## [0.21.0] - 2026-08-21
 
 ### Added

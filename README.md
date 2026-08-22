@@ -20,6 +20,7 @@ dependencies.
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
 - **Liquidity** — [Liquidity](#liquidity)
+- **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -469,6 +470,38 @@ signEntropy(returns);           // up/down balance of a series, in [0, 1] bits
 - `signEntropy` — 1 bit is perfectly balanced two-sided flow, near 0 is one-sided and predictable
 
 Zero and negative weights are ignored, and fewer than two live categories returns 0.
+
+## Online / streaming estimators
+
+Batch metrics rescan the whole history on every tick. In a live pipeline you
+want estimators that update in **O(1) time and memory** as each observation
+streams in. These are stateful classes — `push` one value at a time and read the
+current estimate — and they are numerically stable (Welford / West, not the
+naive Σx² − (Σx)²/n form that loses precision when the mean dwarfs the variance):
+
+```ts
+import { Welford, Ewma, EwmaVariance, RollingWindow } from "orderflow-metrics";
+
+const w = new Welford();
+for (const r of returns) w.push(r);
+w.mean; w.variance; w.std;          // running, exact, updated in O(1)
+
+const vol = new EwmaVariance(0.94); // RiskMetrics daily λ
+for (const r of returns) vol.push(r);
+vol.std;                            // current EWMA volatility
+
+const win = new RollingWindow(20);  // trailing 20-observation window
+for (const r of returns) win.push(r);
+win.mean; win.variance;             // O(1) add + evict (West 1979)
+```
+
+- `Welford` — running mean & variance over all data (`variance` sample, `populationVariance`, `std`, `count`)
+- `Ewma` — exponentially weighted moving average of a level; `lambda` in (0, 1) is the decay
+- `EwmaVariance` — RiskMetrics-style EWMA variance/volatility; assumes ~zero-mean returns
+- `RollingWindow` — mean & variance over the last `size` values, with O(1) add/remove
+
+`Welford` and `RollingWindow` are verified in the test suite to equal a batch
+recomputation at every step; the EWMA classes seed on their first value.
 
 ## Python
 

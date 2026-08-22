@@ -74,3 +74,9 @@ export {
   normalizedEntropy,
   signEntropy,
 } from "./entropy.ts";
+export {
+  Welford,
+  Ewma,
+  EwmaVariance,
+  RollingWindow,
+} from "./online.ts";
