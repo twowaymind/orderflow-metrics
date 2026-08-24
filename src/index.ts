@@ -80,3 +80,8 @@ export {
   EwmaVariance,
   RollingWindow,
 } from "./online.ts";
+export {
+  realizedCovariance,
+  realizedCorrelation,
+  realizedBeta,
+} from "./covariance.ts";

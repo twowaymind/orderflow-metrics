@@ -51,6 +51,7 @@ from .semivar import (
 )
 from .entropy import normalized_entropy, shannon_entropy, sign_entropy
 from .online import Ewma, EwmaVariance, RollingWindow, Welford
+from .covariance import realized_beta, realized_correlation, realized_covariance
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -69,7 +70,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.11.0"
+__version__ = "0.12.0"
 
 __all__ = [
     # types
@@ -177,5 +178,9 @@ __all__ = [
     "Ewma",
     "EwmaVariance",
     "RollingWindow",
+    # realized covariance
+    "realized_covariance",
+    "realized_correlation",
+    "realized_beta",
     "__version__",
 ]

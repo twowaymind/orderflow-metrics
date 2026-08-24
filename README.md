@@ -21,6 +21,7 @@ dependencies.
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -502,6 +503,27 @@ win.mean; win.variance;             // O(1) add + evict (West 1979)
 
 `Welford` and `RollingWindow` are verified in the test suite to equal a batch
 recomputation at every step; the EWMA classes seed on their first value.
+
+## Realized covariance, correlation & beta
+
+Single-asset volatility says how much one instrument moved; risk lives in how
+instruments move *together*. Summing products of contemporaneous returns gives
+the model-free, high-frequency analogue of covariance, correlation, and beta:
+
+```ts
+import { realizedCovariance, realizedCorrelation, realizedBeta } from "orderflow-metrics";
+
+realizedCovariance(x, y);   // Σ xᵢyᵢ
+realizedCorrelation(x, y);  // Σxy / (√Σx²·√Σy²) — in [−1, 1]
+realizedBeta(asset, market); // Σa·m / Σm² — sensitivity of asset to market
+```
+
+- `realizedCovariance` — Σ xᵢyᵢ (symmetric)
+- `realizedCorrelation` — scale-free co-movement in [−1, 1]
+- `realizedBeta` — an asset's realized covariance with a market over the market's realized variance
+
+The two series are paired element-wise over their common length, so align them to
+the same sampling grid first; empty or zero-variance inputs return 0.
 
 ## Python
 

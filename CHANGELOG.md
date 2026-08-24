@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.23.0] - 2026-08-24
+
+### Added
+- Realized covariance (`covariance`) — cross-asset co-movement from two aligned
+  return series: `realizedCovariance` (Σ xᵢyᵢ), `realizedCorrelation`
+  (Σxy / (√Σx²·√Σy²), in [−1, 1]) and `realizedBeta` (Σa·m / Σm², an asset's
+  sensitivity to a market). Model-free, high-frequency analogues of covariance /
+  correlation / beta. Test suite included. (Python: 0.12.0.)
+
 ## [0.22.0] - 2026-08-22
 
 ### Added
