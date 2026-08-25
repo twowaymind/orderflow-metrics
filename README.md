@@ -1,14 +1,17 @@
 # orderflow-metrics
 
 [![CI](https://github.com/twowaymind/orderflow-metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/twowaymind/orderflow-metrics/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/orderflow-metrics.svg?logo=npm)](https://www.npmjs.com/package/orderflow-metrics)
+[![PyPI](https://img.shields.io/pypi/v/orderflow-metrics.svg?logo=pypi&logoColor=white)](https://pypi.org/project/orderflow-metrics/)
+[![Python](https://img.shields.io/pypi/pyversions/orderflow-metrics.svg?logo=python&logoColor=white)](https://pypi.org/project/orderflow-metrics/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-22%2B-brightgreen.svg)](package.json)
 
-Microstructure **order-flow metrics** in dependency-free TypeScript: Order Flow
-Imbalance (OFI), VPIN, information-driven bars, transaction-cost / price-impact
-metrics, trade-sign classification, limit-order-book reconstruction and
-execution scheduling. Runs on Node 22+ with no build step and no runtime
-dependencies.
+Microstructure **order-flow metrics** in dependency-free TypeScript and Python:
+Order Flow Imbalance (OFI), VPIN, information-driven bars, transaction-cost /
+price-impact metrics, trade-sign classification, limit-order-book reconstruction
+and execution scheduling. The npm package ships as compiled ESM with type
+declarations (Node ≥ 18) and has zero runtime dependencies; the TypeScript
+source is also vendorable directly (Node 22+ type-stripping, no build step).
 
 ## Metrics
 

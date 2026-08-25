@@ -1,0 +1,43 @@
+name: Publish npm package
+
+# Fires only on tags matching v* (e.g. v0.24.0), the TypeScript release tags.
+# The Python package publishes separately on py-v* tags (see pypi-publish.yml),
+# so the two never collide.
+#
+# One-time setup (repo maintainer):
+#   Add a repository secret NPM_TOKEN — an npm "Automation" access token (or a
+#   Granular token scoped to publish orderflow-metrics). Settings → Secrets and
+#   variables → Actions → New repository secret.
+#   After the first successful publish you may migrate to npm OIDC Trusted
+#   Publishing (no stored token), mirroring the PyPI setup.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dev dependencies (TypeScript)
+        run: npm install
+      - name: Type-check
+        run: npm run typecheck
+      - name: Run tests
+        run: npm test
+      - name: Build (compile dist)
+        run: npm run build
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

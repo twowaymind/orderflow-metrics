@@ -4,6 +4,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.24.0] - 2026-08-25
+
+### Changed
+- Packaging (no API changes): the npm package now ships **compiled ESM plus
+  type declarations** under `dist/` (built with TypeScript's
+  `rewriteRelativeImportExtensions`), so it imports cleanly in any Node ≥ 18
+  project without a type-stripping flag. `main`/`module`/`types`/`exports` point
+  at the compiled output; the TypeScript source under `src/` stays vendorable as
+  before. Every metric, signature and result is unchanged (129 TS tests still
+  green). (Python: unchanged at 0.12.0.)
+
+### Added
+- npm publishing via GitHub Actions on `v*` tags (`npm-publish.yml`), with build
+  provenance — the TypeScript counterpart to the existing PyPI Trusted
+  Publishing workflow. First npm release of the package.
+
 ## [0.23.0] - 2026-08-24
 
 ### Added
