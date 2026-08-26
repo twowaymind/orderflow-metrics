@@ -63,6 +63,7 @@ export {
   jumpVariation,
   relativeJumpVariation,
 } from "./jumps.ts";
+export { minRV, medRV, realizedQuarticity } from "./robustvol.ts";
 export type { Semivariance } from "./semivar.ts";
 export {
   realizedSemivariance,

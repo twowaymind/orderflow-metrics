@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.25.0] - 2026-08-26
+
+### Added
+- Jump-robust realized variance (`robustvol`) — `minRV` and `medRV`, integrated
+  variance estimators built from the minimum / median of neighbouring absolute
+  returns (Andersen, Dobrev & Schaumburg, 2012). Like bipower variation they
+  strip discrete jumps out of realized variance, but more robustly — MedRV also
+  shrugs off isolated zero returns and outliers. Plus `realizedQuarticity`
+  ((n/3)·Σrᵢ⁴, Barndorff-Nielsen & Shephard 2002), the integrated-quarticity
+  estimate that sets the standard error of realized variance and standardises
+  jump tests. Test suite included. (Python: 0.13.0.)
+
 ## [0.24.0] - 2026-08-25
 
 ### Changed
