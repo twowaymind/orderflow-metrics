@@ -53,6 +53,7 @@ from .entropy import normalized_entropy, shannon_entropy, sign_entropy
 from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .covariance import realized_beta, realized_correlation, realized_covariance
 from .robustvol import med_rv, min_rv, realized_quarticity
+from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -71,7 +72,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.13.0"
+__version__ = "0.14.0"
 
 __all__ = [
     # types
@@ -187,5 +188,9 @@ __all__ = [
     "min_rv",
     "med_rv",
     "realized_quarticity",
+    # microstructure-noise-aware variance
+    "noise_variance",
+    "sparse_realized_variance",
+    "volatility_signature",
     "__version__",
 ]

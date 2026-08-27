@@ -64,6 +64,12 @@ export {
   relativeJumpVariation,
 } from "./jumps.ts";
 export { minRV, medRV, realizedQuarticity } from "./robustvol.ts";
+export type { SignaturePoint } from "./noise.ts";
+export {
+  noiseVariance,
+  sparseRealizedVariance,
+  volatilitySignature,
+} from "./noise.ts";
 export type { Semivariance } from "./semivar.ts";
 export {
   realizedSemivariance,

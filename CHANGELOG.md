@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.26.0] - 2026-08-27
+
+### Added
+- Microstructure-noise-aware realized variance (`noise`) — `noiseVariance`
+  (variance of the microstructure noise, ≈ RV_finest / 2n; Zhang, Mykland &
+  Aït-Sahalia 2005), `sparseRealizedVariance` (RV on a coarser grid, averaged
+  over every offset by subsampling so no data is wasted — `step = 1` reproduces
+  plain RV, larger steps suppress noise bias) and `volatilitySignature` (RV as a
+  function of sampling step: the classic signature plot whose blow-up at fine
+  steps is the fingerprint of microstructure noise). Test suite included.
+  (Python: 0.14.0.)
+
 ## [0.25.0] - 2026-08-26
 
 ### Added
