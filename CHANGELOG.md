@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.27.0] - 2026-08-28
+
+### Added
+- Two-Scale Realized Variance (`tsrv`) — `twoScaleRealizedVariance` and
+  `twoScaleRealizedVolatility`, a *consistent*, microstructure-noise-corrected
+  estimator of integrated variance (Zhang, Mykland & Aït-Sahalia 2005). It
+  combines a slow subsampled RV with the fast all-ticks RV and subtracts the
+  noise bias — the estimator-grade sequel to the diagnostics in the `noise`
+  module. Test suite included. (Python: 0.15.0.)
+
 ## [0.26.0] - 2026-08-27
 
 ### Added

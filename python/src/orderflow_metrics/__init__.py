@@ -54,6 +54,7 @@ from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .covariance import realized_beta, realized_correlation, realized_covariance
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
+from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .scheduling import pov, twap
@@ -72,7 +73,7 @@ from .vpin import (
     vpin,
 )
 
-__version__ = "0.14.0"
+__version__ = "0.15.0"
 
 __all__ = [
     # types
@@ -192,5 +193,8 @@ __all__ = [
     "noise_variance",
     "sparse_realized_variance",
     "volatility_signature",
+    # two-scale realized variance
+    "two_scale_realized_variance",
+    "two_scale_realized_volatility",
     "__version__",
 ]
