@@ -237,6 +237,27 @@ r.slippageBps;   // cost vs mid, in basis points
 r.remainingSize; // > 0 if the book was too thin
 ```
 
+### Book-depth liquidity
+
+Read liquidity off a book snapshot — near-touch depth, how steeply the book
+thickens away from mid, and the round-trip cost of a given size. Take plain
+`Level[]` arrays sorted best-first (bids high→low, asks low→high):
+
+```ts
+import { depthWithin, orderBookSlope, costOfRoundTrip } from "orderflow-metrics";
+
+const bids = [{ price: 99.95, size: 6 }, { price: 99.9, size: 10 }];
+const asks = [{ price: 100.0, size: 5 }, { price: 100.05, size: 8 }];
+
+depthWithin(bids, asks, 10);     // { bidDepth, askDepth, total } within ±10 bps of mid
+orderBookSlope(asks, 99.975);    // cumulative size per unit of relative price move
+costOfRoundTrip(bids, asks, 15); // { roundTripBps, avgBuyPrice, avgSellPrice, filledSize }
+```
+
+- `depthWithin` — resting size within ±bps of mid, split by side
+- `orderBookSlope` — (Σ size) / (relative distance to the outermost level)
+- `costOfRoundTrip` — basis-point liquidity tax of buying then selling `size`
+
 ## Execution scheduling
 
 Split a parent order into child slices:

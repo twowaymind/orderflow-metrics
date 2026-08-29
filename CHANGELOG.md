@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.28.0] - 2026-08-29
+
+### Added
+- Book-depth liquidity (`bookdepth`) — `depthWithin` (resting size within ±bps
+  of mid, split by side), `orderBookSlope` (cumulative size per unit of relative
+  price distance — how steeply the book thickens away from mid), and
+  `costOfRoundTrip` (the basis-point "liquidity tax" of buying then selling a
+  given size, walking both sides of the book). Snapshot statistics of the
+  *standing* book, complementing `amihudIlliquidity` (impact over time) and
+  `simulateMarketOrder` (a single execution). Operate on plain `Level[]` arrays
+  sorted best-first. Test suite included. (Python: 0.16.0.)
+
 ## [0.27.0] - 2026-08-28
 
 ### Added

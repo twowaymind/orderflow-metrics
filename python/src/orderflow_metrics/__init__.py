@@ -57,6 +57,13 @@ from .noise import noise_variance, sparse_realized_variance, volatility_signatur
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
+from .bookdepth import (
+    DepthWithin,
+    RoundTripCost,
+    cost_of_round_trip,
+    depth_within,
+    order_book_slope,
+)
 from .scheduling import pov, twap
 from .simulate import Fill, MarketOrderResult, simulate_market_order
 from .types import L1Quote, Side, Trade
@@ -127,6 +134,12 @@ __all__ = [
     "simulate_market_order",
     "Fill",
     "MarketOrderResult",
+    # book-depth liquidity
+    "depth_within",
+    "order_book_slope",
+    "cost_of_round_trip",
+    "DepthWithin",
+    "RoundTripCost",
     # scheduling
     "twap",
     "pov",
