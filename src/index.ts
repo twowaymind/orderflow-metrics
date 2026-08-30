@@ -80,6 +80,12 @@ export {
   twoScaleRealizedVariance,
   twoScaleRealizedVolatility,
 } from "./tsrv.ts";
+export {
+  realizedKernel,
+  realizedKernelVolatility,
+  realizedAutocovariance,
+  parzenKernel,
+} from "./kernel.ts";
 export type { Semivariance } from "./semivar.ts";
 export {
   realizedSemivariance,

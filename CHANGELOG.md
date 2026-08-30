@@ -4,6 +4,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.29.0] - 2026-08-30
+
+### Added
+- Realized kernel (`kernel`) — `realizedKernel` and `realizedKernelVolatility`
+  (Barndorff-Nielsen, Hansen, Lund & Shephard 2008), the flagship noise-robust
+  estimator of integrated variance. It adds Parzen-weighted realized
+  autocovariances of the returns to plain RV, cancelling the microstructure-
+  noise bias while staying non-negative by construction. `bandwidth` sets the
+  number of lags. Also exports the building blocks `realizedAutocovariance`
+  (γ_h = Σ rⱼ·rⱼ₋ₕ) and `parzenKernel` (the kernel weight). The efficient
+  companion to the two-scale estimator in `tsrv`. Test suite included.
+  (Python: 0.17.0.)
+
 ## [0.28.0] - 2026-08-29
 
 ### Added

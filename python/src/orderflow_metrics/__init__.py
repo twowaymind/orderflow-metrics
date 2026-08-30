@@ -55,6 +55,12 @@ from .covariance import realized_beta, realized_correlation, realized_covariance
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
+from .kernel import (
+    parzen_kernel,
+    realized_autocovariance,
+    realized_kernel,
+    realized_kernel_volatility,
+)
 from .ofi import ofi, ofi_contribution, ofi_series
 from .orderbook import BookSide, Level, OrderBook
 from .bookdepth import (
@@ -209,5 +215,10 @@ __all__ = [
     # two-scale realized variance
     "two_scale_realized_variance",
     "two_scale_realized_volatility",
+    # realized kernel
+    "realized_kernel",
+    "realized_kernel_volatility",
+    "realized_autocovariance",
+    "parzen_kernel",
     "__version__",
 ]
