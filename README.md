@@ -135,6 +135,22 @@ kyleLambda([                             // price impact per unit signed flow
 - `kyleLambda` — OLS impact slope of ΔP on signed volume
 - `rollSpread` — Roll's (1984) spread from price-change autocovariance
 
+### Execution quality (vs the quote)
+
+Measure a fill against the quote it faced — the SEC Rule 605 / TCA view:
+
+```ts
+import { quotedSpread, priceImprovement, effectiveToQuotedRatio } from "orderflow-metrics";
+
+quotedSpread(99.98, 100.02);                     // 0.04 — width of the market
+priceImprovement(100.01, 99.98, 100.02, "buy");  // 0.01 — filled inside the ask
+effectiveToQuotedRatio(0.02, 0.04);              // 0.5  — traded at half the quoted spread
+```
+
+- `quotedSpread` / `quotedHalfSpread` — width of the market
+- `priceImprovement` — how far inside the quote a fill landed (signed by side)
+- `effectiveToQuotedRatio` — effective ÷ quoted; <1 = price improvement, >1 = walked the book
+
 ## Fair value
 
 ```ts

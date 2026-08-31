@@ -17,6 +17,12 @@ export {
   kyleLambda,
   rollSpread,
 } from "./execution.ts";
+export {
+  quotedSpread,
+  quotedHalfSpread,
+  priceImprovement,
+  effectiveToQuotedRatio,
+} from "./execquality.ts";
 export { mid, weightedMid, relativeSpreadBps } from "./fairvalue.ts";
 export type { Sign, PriceVsMid } from "./classify.ts";
 export { tickRule, leeReady } from "./classify.ts";

@@ -18,6 +18,12 @@ from .execution import (
     realized_spread,
     roll_spread,
 )
+from .execquality import (
+    effective_to_quoted_ratio,
+    price_improvement,
+    quoted_half_spread,
+    quoted_spread,
+)
 from .fairvalue import mid, relative_spread_bps, weighted_mid
 from .imbalance import depth_imbalance, trade_imbalance
 from .impact import (
@@ -114,6 +120,11 @@ __all__ = [
     "kyle_lambda",
     "roll_spread",
     "FlowObservation",
+    # execution quality
+    "quoted_spread",
+    "quoted_half_spread",
+    "price_improvement",
+    "effective_to_quoted_ratio",
     # fairvalue
     "mid",
     "weighted_mid",

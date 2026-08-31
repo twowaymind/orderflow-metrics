@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.30.0] - 2026-08-31
+
+### Added
+- Execution-quality metrics (`execquality`) — `quotedSpread` / `quotedHalfSpread`
+  (the width of the market), `priceImprovement` (how much better than the
+  standing quote a fill was, signed by side), and `effectiveToQuotedRatio` (the
+  SEC Rule 605 / TCA workhorse: <1 = executed inside the quoted spread, >1 =
+  outside). These measure a trade against the quote it faced, complementing the
+  effective/realized spread and impact measures in `execution`. (Python: 0.18.0.)
+
 ## [0.29.0] - 2026-08-30
 
 ### Added
