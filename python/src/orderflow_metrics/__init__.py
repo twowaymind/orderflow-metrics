@@ -58,6 +58,7 @@ from .semivar import (
 from .entropy import normalized_entropy, shannon_entropy, sign_entropy
 from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .covariance import realized_beta, realized_correlation, realized_covariance
+from .semicovariance import Semicovariance, realized_semicovariance
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -215,6 +216,9 @@ __all__ = [
     "realized_covariance",
     "realized_correlation",
     "realized_beta",
+    # realized semicovariance
+    "realized_semicovariance",
+    "Semicovariance",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

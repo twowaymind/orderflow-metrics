@@ -4,6 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.31.0] - 2026-09-01
+
+### Added
+- Realized semicovariance (`semicovariance`) — `realizedSemicovariance` splits
+  realized covariance by the signs of the two return series into concordant-
+  positive (both up), concordant-negative (both down), and mixed (opposite
+  signs) components that sum back to `realizedCovariance` (Bollerslev, Li, Patton
+  & Quaedvlieg 2020). The negative component is joint downside covariance — the
+  crash-correlation / downside-beta half. The cross-asset analogue of realized
+  semivariance. (Python: 0.19.0.)
+
 ## [0.30.0] - 2026-08-31
 
 ### Added

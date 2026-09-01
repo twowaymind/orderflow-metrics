@@ -565,6 +565,22 @@ realizedBeta(asset, market); // Σa·m / Σm² — sensitivity of asset to marke
 The two series are paired element-wise over their common length, so align them to
 the same sampling grid first; empty or zero-variance inputs return 0.
 
+### Realized semicovariance
+
+Split realized covariance by the sign of each pair of returns — the cross-asset
+analogue of realized semivariance (Bollerslev, Li, Patton &amp; Quaedvlieg 2020):
+
+```ts
+import { realizedSemicovariance } from "orderflow-metrics";
+
+realizedSemicovariance(x, y);
+// { positive, negative, mixed }  — sum to realizedCovariance(x, y)
+```
+
+- `positive` — both up: Σ max(x,0)·max(y,0) (≥ 0)
+- `negative` — both down: Σ min(x,0)·min(y,0) (≥ 0) — joint downside / crash covariance
+- `mixed` — opposite signs (≤ 0); the three sum to the realized covariance
+
 ## Python
 
 A dependency-free Python port lives in [`python/`](python/) and ships the same

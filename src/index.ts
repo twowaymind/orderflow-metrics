@@ -114,3 +114,5 @@ export {
   realizedCorrelation,
   realizedBeta,
 } from "./covariance.ts";
+export type { Semicovariance } from "./semicovariance.ts";
+export { realizedSemicovariance } from "./semicovariance.ts";
