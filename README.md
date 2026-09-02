@@ -21,7 +21,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance)
-- **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent)
+- **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
 - **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta)
@@ -427,6 +427,32 @@ hurstExponent(returns);
 
 - `hurstExponent` — R/S Hurst estimate; a companion to `varianceRatio` and
   `autocorrelation` for gauging market efficiency
+
+## Mean reversion (half-life & z-score)
+
+Quantify *how fast* a spread or pair residual reverts and *how far* from home it
+sits right now — the Ornstein–Uhlenbeck timescale a pairs / stat-arb strategy
+trades on:
+
+```ts
+import { meanReversionSpeed, halfLife, zScore } from "orderflow-metrics";
+
+const spread = [10.0, 10.6, 10.1, 9.7, 10.2, 9.8, 10.3, 9.9];
+
+meanReversionSpeed(spread); // κ ≈ 1.393 per step (>0 reverting · <0 trending)
+halfLife(spread);           // ≈ 0.498 steps to decay halfway (Infinity if κ ≤ 0)
+zScore(spread);             // ≈ -0.642 — latest point sits below the mean
+```
+
+- `meanReversionSpeed` — OU reversion speed `κ`, the negated OLS slope of the
+  change `Δyₜ` on the lagged level `yₜ₋₁`
+- `halfLife` — `ln 2 / κ`, the number of steps a deviation takes to revert
+  halfway; `Infinity` when the series does not mean-revert
+- `zScore` — the latest observation as a standardized deviation from the sample
+  mean (population σ), the raw entry/exit signal
+
+Operates on a **level / spread** series (not returns), complementing the
+`varianceRatio` and `hurstExponent` regime diagnostics above.
 
 ## Realized moments
 

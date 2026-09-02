@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.32.0] - 2026-09-02
+
+### Added
+- Mean-reversion metrics (`meanrev`) — `meanReversionSpeed` recovers the
+  Ornstein–Uhlenbeck reversion speed `κ` per step (the negated OLS slope of the
+  change on the lagged level; `κ > 0` mean-reverting, `κ < 0` trending),
+  `halfLife` converts it to the reversion horizon `ln 2 / κ` (`Infinity` when
+  the series does not revert), and `zScore` standardizes the latest observation
+  against the sample mean — the entry/exit signal. The pairs / stat-arb
+  timescale toolkit, operating on a level/spread series and complementing the
+  variance-ratio and Hurst regime diagnostics. (Python: 0.20.0.)
+
 ## [0.31.0] - 2026-09-01
 
 ### Added

@@ -59,6 +59,7 @@ from .entropy import normalized_entropy, shannon_entropy, sign_entropy
 from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .covariance import realized_beta, realized_correlation, realized_covariance
 from .semicovariance import Semicovariance, realized_semicovariance
+from .meanrev import half_life, mean_reversion_speed, z_score
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -219,6 +220,10 @@ __all__ = [
     # realized semicovariance
     "realized_semicovariance",
     "Semicovariance",
+    # mean reversion (Ornstein-Uhlenbeck timescale)
+    "mean_reversion_speed",
+    "half_life",
+    "z_score",
     # jump-robust realized variance
     "min_rv",
     "med_rv",
