@@ -15,7 +15,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 
 ## Metrics
 
-- **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification) · [Order-flow entropy](#order-flow-entropy)
+- **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Multi-level OFI](#multi-level-ofi-deep-book) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification) · [Order-flow entropy](#order-flow-entropy)
 - **Bars & sampling** — [Information-driven bars](#information-driven-bars)
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
@@ -86,6 +86,36 @@ is a strong linear predictor of short-horizon price changes.
 - `ofiContribution(prev, curr)` — one transition
 - `ofiSeries(quotes)` — per-step contributions (for bucketing / regression)
 - `ofi(quotes)` — cumulative
+
+## Multi-level OFI (deep-book)
+
+Top-of-book OFI flickers in fragmented books. `mlofi` applies the same
+event-flow logic at each of the top `K` levels and returns the per-level OFI
+vector (Cont, Cucuringu & Zhang, 2023), then collapses it with geometric
+depth-decay weights:
+
+```ts
+import { multiLevelOFI, depthWeightedOFI, type BookSnapshot } from "orderflow-metrics";
+
+const prev: BookSnapshot = {
+  bids: [{ price: 100.0, size: 200 }, { price: 99.9, size: 150 }, { price: 99.8, size: 120 }],
+  asks: [{ price: 100.1, size: 180 }, { price: 100.2, size: 160 }, { price: 100.3, size: 140 }],
+};
+const curr: BookSnapshot = {
+  bids: [{ price: 100.0, size: 260 }, { price: 99.9, size: 150 }, { price: 99.8, size: 90 }],
+  asks: [{ price: 100.1, size: 120 }, { price: 100.2, size: 160 }, { price: 100.3, size: 140 }],
+};
+
+multiLevelOFI(prev, curr, 3);        // [120, 0, -30] — OFI per level
+depthWeightedOFI(prev, curr, 3, 0.5); // 64.29 — near touch weighted up
+```
+
+- `multiLevelOFI(prev, curr, levels)` — the OFI vector across the top `levels`
+- `multiLevelOFISeries(snapshots, levels)` — per-step vectors for a sequence
+- `depthWeightedOFI(prev, curr, levels, decay)` — geometric depth-decay scalar (`decay` in (0,1]; 1 = equal weights)
+
+Levels beyond the depth present in either snapshot contribute 0. Sides are
+best-first: bids by descending price, asks by ascending price.
 
 ## Imbalance
 

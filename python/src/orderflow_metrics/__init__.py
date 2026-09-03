@@ -70,6 +70,12 @@ from .kernel import (
     realized_kernel_volatility,
 )
 from .ofi import ofi, ofi_contribution, ofi_series
+from .mlofi import (
+    BookSnapshot,
+    depth_weighted_ofi,
+    multi_level_ofi,
+    multi_level_ofi_series,
+)
 from .orderbook import BookSide, Level, OrderBook
 from .bookdepth import (
     DepthWithin,
@@ -105,6 +111,11 @@ __all__ = [
     "ofi",
     "ofi_series",
     "ofi_contribution",
+    # multi-level ofi (deep-book)
+    "BookSnapshot",
+    "multi_level_ofi",
+    "multi_level_ofi_series",
+    "depth_weighted_ofi",
     # imbalance
     "depth_imbalance",
     "trade_imbalance",

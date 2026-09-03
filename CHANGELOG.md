@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.33.0] - 2026-09-03
+
+### Added
+- Multi-level OFI (`mlofi`) — deep-book order-flow imbalance. `multiLevelOFI`
+  applies the Cont–Kukanov–Stoikov event-flow logic at each of the top `K` price
+  levels and returns the per-level OFI vector (Cont, Cucuringu & Zhang 2023,
+  "Cross-impact of order flow imbalance in equity markets"); `multiLevelOFISeries`
+  gives the per-step vectors for a sequence of
+  snapshots; `depthWeightedOFI` collapses the vector to a scalar with geometric
+  depth-decay weights. Extends the level-1 `ofi` to the noise-resistant,
+  size-aware signal that fragmented books need. (Python: 0.21.0.)
+
 ## [0.32.0] - 2026-09-02
 
 ### Added

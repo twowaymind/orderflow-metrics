@@ -1,5 +1,11 @@
 export type { L1Quote, Trade, Side } from "./types.ts";
 export { ofi, ofiSeries, ofiContribution } from "./ofi.ts";
+export type { BookSnapshot } from "./mlofi.ts";
+export {
+  multiLevelOFI,
+  multiLevelOFISeries,
+  depthWeightedOFI,
+} from "./mlofi.ts";
 export { depthImbalance, tradeImbalance } from "./imbalance.ts";
 export type { VolumeBucket } from "./vpin.ts";
 export {
