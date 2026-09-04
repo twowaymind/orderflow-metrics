@@ -4,6 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.34.0] - 2026-09-04
+
+### Added
+- Adverse-selection & markout profiles (`adverseselection`) — `markoutProfile`
+  gives the signed post-fill mid move at a sequence of horizons (the shape of
+  toxicity, not a single point), `adverseSelectionScore` normalizes a markout by
+  the half-spread (a score above 1 = the fill was toxic beyond what the spread
+  paid for), and `averageMarkoutProfile` is the aggregate markout curve across
+  many fills. Extends the single-horizon `markout` into the standard TCA
+  adverse-selection lens. (Python: 0.22.0.)
+
 ## [0.33.0] - 2026-09-03
 
 ### Added

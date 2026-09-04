@@ -18,7 +18,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Order flow & imbalance** — [Order Flow Imbalance](#order-flow-imbalance) · [Multi-level OFI](#multi-level-ofi-deep-book) · [Imbalance](#imbalance) · [VPIN](#vpin) · [Trade-sign classification](#trade-sign-classification) · [Order-flow entropy](#order-flow-entropy)
 - **Bars & sampling** — [Information-driven bars](#information-driven-bars)
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
-- **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
+- **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
@@ -368,6 +368,29 @@ markout("buy", 100, 100.5);                 // +0.5 — price moved with the tra
 - `linearPermanentImpact` / `linearTemporaryImpact` — Almgren-Chriss impact terms
 - `almgrenChrissCost` — expected TWAP cost, split into permanent vs temporary
 - `markout` / `averageMarkout` — realized post-trade adverse-selection drift
+
+## Adverse selection (markout profiles)
+
+Toxicity has a *shape*: an informed fill keeps drifting against you, a benign one
+snaps back. The markout profile is the signed post-fill move across horizons — the
+standard TCA adverse-selection lens:
+
+```ts
+import { markoutProfile, adverseSelectionScore } from "orderflow-metrics";
+
+// taker buys at mid 100.00; mids at +1s / +5s / +30s
+markoutProfile("buy", 100.0, [100.02, 100.05, 100.04]); // [0.02, 0.05, 0.04]
+
+// the 1s move in half-spread units (spread 0.02 → half 0.01)
+adverseSelectionScore("buy", 100.0, 100.02, 0.02);      // 2 — toxic beyond the spread
+```
+
+- `markoutProfile(side, midAtTrade, midsAfter)` — signed markout at each horizon
+- `adverseSelectionScore(side, midAtTrade, midAfter, spread)` — markout in half-spread units (>1 = toxic beyond the quoted spread)
+- `averageMarkoutProfile(observations)` — the aggregate markout curve across many fills
+
+Sign is the taker's (buy → up is positive); flip it for the liquidity provider's
+toxicity. Extends the single-horizon `markout`.
 
 ## Implementation shortfall
 

@@ -36,6 +36,12 @@ from .impact import (
     markout,
     square_root_impact,
 )
+from .adverseselection import (
+    MarkoutProfileObservation,
+    adverse_selection_score,
+    average_markout_profile,
+    markout_profile,
+)
 from .liquidity import ReturnVolume, amihud_illiquidity
 from .shortfall import ShortfallResult, arrival_slippage_bps, implementation_shortfall
 from .spreadest import Ohlc, abdi_ranaldo, corwin_schultz
@@ -187,6 +193,11 @@ __all__ = [
     "average_markout",
     "ImpactCost",
     "MarkoutObservation",
+    # adverse selection / markout profiles
+    "markout_profile",
+    "adverse_selection_score",
+    "average_markout_profile",
+    "MarkoutProfileObservation",
     # shortfall
     "implementation_shortfall",
     "arrival_slippage_bps",

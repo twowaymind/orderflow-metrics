@@ -62,6 +62,12 @@ export {
   markout,
   averageMarkout,
 } from "./impact.ts";
+export type { MarkoutProfileObservation } from "./adverseselection.ts";
+export {
+  markoutProfile,
+  adverseSelectionScore,
+  averageMarkoutProfile,
+} from "./adverseselection.ts";
 export type { ShortfallResult } from "./shortfall.ts";
 export { implementationShortfall, arrivalSlippageBps } from "./shortfall.ts";
 export type { Ohlc } from "./spreadest.ts";
