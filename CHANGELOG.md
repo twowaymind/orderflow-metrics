@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.35.0] - 2026-09-05
+
+### Added
+- Downside & upside beta (`downsidebeta`) — `downsideBeta` and `upsideBeta`
+  compute the asset's regression beta conditional on the market falling / rising
+  (Ang, Chen & Xing 2006, "Downside Risk"), and `betaAsymmetry` is the gap
+  `β⁻ − β⁺` — the extra sensitivity to down markets that carries a risk premium.
+  A sign-conditional companion to the unconditional `realizedBeta` and the
+  `semicovariance` downside decomposition. (Python: 0.23.0.)
+
 ## [0.34.0] - 2026-09-04
 
 ### Added

@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -659,6 +659,23 @@ realizedSemicovariance(x, y);
 - `positive` — both up: Σ max(x,0)·max(y,0) (≥ 0)
 - `negative` — both down: Σ min(x,0)·min(y,0) (≥ 0) — joint downside / crash covariance
 - `mixed` — opposite signs (≤ 0); the three sum to the realized covariance
+
+### Downside & upside beta
+
+Beta, split by the sign of the market return — the down-market co-movement is the
+one that gets priced (Ang, Chen &amp; Xing 2006):
+
+```ts
+import { downsideBeta, upsideBeta, betaAsymmetry } from "orderflow-metrics";
+
+downsideBeta(asset, market);  // β⁻ — beta over days the market fell
+upsideBeta(asset, market);    // β⁺ — beta over days the market rose
+betaAsymmetry(asset, market); // β⁻ − β⁺ — priced downside sensitivity
+```
+
+- `downsideBeta` / `upsideBeta` — conditional regression beta on down / up markets
+- `betaAsymmetry` — the `β⁻ − β⁺` gap; positive = extra downside risk
+- `NaN` when a side has fewer than two qualifying periods or zero conditional market variance
 
 ## Python
 
