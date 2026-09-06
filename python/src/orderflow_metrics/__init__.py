@@ -66,6 +66,11 @@ from .online import Ewma, EwmaVariance, RollingWindow, Welford
 from .covariance import realized_beta, realized_correlation, realized_covariance
 from .semicovariance import Semicovariance, realized_semicovariance
 from .downsidebeta import beta_asymmetry, downside_beta, upside_beta
+from .downsidecov import (
+    average_downside_correlation,
+    downside_correlation_matrix,
+    downside_covariance_matrix,
+)
 from .meanrev import half_life, mean_reversion_speed, z_score
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
@@ -247,6 +252,10 @@ __all__ = [
     "downside_beta",
     "upside_beta",
     "beta_asymmetry",
+    # downside covariance / correlation matrices
+    "downside_covariance_matrix",
+    "downside_correlation_matrix",
+    "average_downside_correlation",
     # mean reversion (Ornstein-Uhlenbeck timescale)
     "mean_reversion_speed",
     "half_life",

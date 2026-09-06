@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.36.0] - 2026-09-07
+
+### Added
+- Downside covariance & correlation matrices (`downsidecov`) — lifts the
+  joint-downside (both-down) component of `semicovariance` to a full N×N book.
+  `downsideCovarianceMatrix` builds the matrix of `Σ min(xᵢ,0)·min(xⱼ,0)` (its
+  diagonal is each asset's downside semivariance), `downsideCorrelationMatrix`
+  normalizes it, and `averageDownsideCorrelation` collapses the off-diagonal to a
+  single &ldquo;how correlated is my book on the way down&rdquo; number — the
+  crash-correlation gauge. Answers the multivariate-downside-covariance ask.
+  (Python: 0.24.0.)
+
 ## [0.35.0] - 2026-09-05
 
 ### Added

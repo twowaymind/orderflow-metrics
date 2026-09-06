@@ -129,4 +129,9 @@ export {
 export type { Semicovariance } from "./semicovariance.ts";
 export { realizedSemicovariance } from "./semicovariance.ts";
 export { downsideBeta, upsideBeta, betaAsymmetry } from "./downsidebeta.ts";
+export {
+  downsideCovarianceMatrix,
+  downsideCorrelationMatrix,
+  averageDownsideCorrelation,
+} from "./downsidecov.ts";
 export { meanReversionSpeed, halfLife, zScore } from "./meanrev.ts";

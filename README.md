@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -676,6 +676,29 @@ betaAsymmetry(asset, market); // β⁻ − β⁺ — priced downside sensitivity
 - `downsideBeta` / `upsideBeta` — conditional regression beta on down / up markets
 - `betaAsymmetry` — the `β⁻ − β⁺` gap; positive = extra downside risk
 - `NaN` when a side has fewer than two qualifying periods or zero conditional market variance
+
+### Downside covariance & correlation matrices
+
+Lift the joint-downside piece of `semicovariance` to a whole book — the
+crash-correlation half of the covariance matrix:
+
+```ts
+import {
+  downsideCovarianceMatrix,
+  downsideCorrelationMatrix,
+  averageDownsideCorrelation,
+} from "orderflow-metrics";
+
+const returns = [x1, x2, x3]; // aligned return series, one per asset
+
+downsideCovarianceMatrix(returns);   // N×N: Σ min(xᵢ,0)·min(xⱼ,0)
+downsideCorrelationMatrix(returns);  // normalized; diagonal 1
+averageDownsideCorrelation(returns); // one number: how bound the book is on the way down
+```
+
+- `downsideCovarianceMatrix` — both-down joint covariance per pair; diagonal = downside semivariance
+- `downsideCorrelationMatrix` — normalized; `NaN` for any zero-downside asset
+- `averageDownsideCorrelation` — mean off-diagonal downside correlation (the crash-correlation gauge)
 
 ## Python
 
