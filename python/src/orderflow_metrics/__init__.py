@@ -71,6 +71,12 @@ from .downsidecov import (
     downside_correlation_matrix,
     downside_covariance_matrix,
 )
+from .semibeta import (
+    Semibetas,
+    downside_semibeta,
+    realized_semibetas,
+    semibeta_asymmetry,
+)
 from .meanrev import half_life, mean_reversion_speed, z_score
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
@@ -256,6 +262,11 @@ __all__ = [
     "downside_covariance_matrix",
     "downside_correlation_matrix",
     "average_downside_correlation",
+    # realized semibetas (Bollerslev-Patton-Quaedvlieg 2022)
+    "realized_semibetas",
+    "downside_semibeta",
+    "semibeta_asymmetry",
+    "Semibetas",
     # mean reversion (Ornstein-Uhlenbeck timescale)
     "mean_reversion_speed",
     "half_life",

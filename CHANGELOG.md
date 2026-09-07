@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.37.0] - 2026-09-07
+
+### Added
+- Realized semibetas (`semibeta`) — the four-way sign decomposition of market
+  beta from Bollerslev, Patton & Quaedvlieg 2022 (*Realized semibetas:
+  Disentangling &ldquo;good&rdquo; and &ldquo;bad&rdquo; downside risks*, JFE
+  144, 227–246). `realizedSemibetas` returns the four non-negative components —
+  `concordantPositive` (β^P), `concordantNegative` (β^N), `mixedMarketUp` (β^M⁺)
+  and `mixedMarketDown` (β^M⁻) — that reconstruct `realizedBeta` exactly via
+  `β = β^P + β^N − β^M⁺ − β^M⁻`. `downsideSemibeta` exposes β^N (the priced
+  &ldquo;both fall together&rdquo; component) and `semibetaAsymmetry` gives
+  `β^N − β^P`. Uncentered and additive, conditioning on the signs of *both*
+  series — the complement to the demeaned Ang-Chen-Xing `downsideBeta`.
+  (Python: 0.25.0.)
+
 ## [0.36.0] - 2026-09-07
 
 ### Added

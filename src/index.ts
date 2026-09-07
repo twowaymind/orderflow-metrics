@@ -134,4 +134,10 @@ export {
   downsideCorrelationMatrix,
   averageDownsideCorrelation,
 } from "./downsidecov.ts";
+export type { Semibetas } from "./semibeta.ts";
+export {
+  realizedSemibetas,
+  downsideSemibeta,
+  semibetaAsymmetry,
+} from "./semibeta.ts";
 export { meanReversionSpeed, halfLife, zScore } from "./meanrev.ts";

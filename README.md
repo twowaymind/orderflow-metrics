@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -699,6 +699,32 @@ averageDownsideCorrelation(returns); // one number: how bound the book is on the
 - `downsideCovarianceMatrix` — both-down joint covariance per pair; diagonal = downside semivariance
 - `downsideCorrelationMatrix` — normalized; `NaN` for any zero-downside asset
 - `averageDownsideCorrelation` — mean off-diagonal downside correlation (the crash-correlation gauge)
+
+### Realized semibetas
+
+Split realized beta into four sign-based pieces — the "good", "bad", and mixed
+components of an asset's market exposure (Bollerslev, Patton & Quaedvlieg 2022):
+
+```ts
+import {
+  realizedSemibetas,
+  downsideSemibeta,
+  semibetaAsymmetry,
+} from "orderflow-metrics";
+
+const asset = [0.02, -0.03, 0.01, -0.04, -0.01];
+const market = [0.01, -0.02, 0.015, -0.03, 0.008];
+
+realizedSemibetas(asset, market);
+// { concordantPositive, concordantNegative, mixedMarketUp, mixedMarketDown } — all ≥ 0,
+// and β = concordantPositive + concordantNegative − mixedMarketUp − mixedMarketDown
+downsideSemibeta(asset, market);  // β^N — the priced "both fall together" component
+semibetaAsymmetry(asset, market); // β^N − β^P
+```
+
+- `realizedSemibetas` — the four non-negative semibetas that reconstruct `realizedBeta`
+- `downsideSemibeta` — the concordant-negative semibeta β^N (the one BPQ find is priced)
+- `semibetaAsymmetry` — β^N − β^P, the priced downside skew in market exposure
 
 ## Python
 
