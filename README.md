@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -725,6 +725,34 @@ semibetaAsymmetry(asset, market); // β^N − β^P
 - `realizedSemibetas` — the four non-negative semibetas that reconstruct `realizedBeta`
 - `downsideSemibeta` — the concordant-negative semibeta β^N (the one BPQ find is priced)
 - `semibetaAsymmetry` — β^N − β^P, the priced downside skew in market exposure
+
+### Hayashi-Yoshida covariance (non-synchronous)
+
+Estimate covariance and correlation directly from two series' own irregular
+timestamps — no resampling, no Epps-effect bias (Hayashi & Yoshida 2005):
+
+```ts
+import {
+  hayashiYoshidaCovariance,
+  hayashiYoshidaCorrelation,
+  type TimedPrice,
+} from "orderflow-metrics";
+
+const x: TimedPrice[] = [ // asset X, its own tick times
+  { time: 0, price: 100.0 }, { time: 1, price: 100.5 },
+  { time: 3, price: 100.2 }, { time: 4, price: 100.4 },
+];
+const y: TimedPrice[] = [ // asset Y, different tick times
+  { time: 0, price: 50.0 }, { time: 2, price: 50.2 },
+  { time: 3, price: 50.1 }, { time: 5, price: 50.4 },
+];
+
+hayashiYoshidaCovariance(x, y);  // Σ ΔXᵢ·ΔYⱼ over time-overlapping intervals
+hayashiYoshidaCorrelation(x, y); // normalized by each series' own realized variance
+```
+
+- `hayashiYoshidaCovariance` — sums return products over overlapping intervals; collapses to `realizedCovariance` on a shared grid
+- `hayashiYoshidaCorrelation` — synchronization-free correlation; `NaN` for a zero-variance series
 
 ## Python
 

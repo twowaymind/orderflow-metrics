@@ -4,6 +4,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.38.0] - 2026-09-08
+
+### Added
+- Hayashi-Yoshida non-synchronous covariance (`hayashi`) — realized covariance
+  and correlation estimated directly from two price series' own irregular
+  timestamps, with no resampling and no Epps-effect bias (Hayashi & Yoshida
+  2005, *On covariance estimation of non-synchronously observed diffusion
+  processes*, Bernoulli 11(2), 359–379). `hayashiYoshidaCovariance` sums return
+  cross-products `ΔXᵢ·ΔYⱼ` over every pair of time-overlapping return intervals
+  `(tᵢ₋₁, tᵢ]` (half-open — intervals touching only at an endpoint do not
+  overlap); it collapses exactly to `realizedCovariance` on a shared grid.
+  `hayashiYoshidaCorrelation` normalizes by each series' own realized variance
+  for a synchronization-free correlation (`NaN` for a zero-variance series).
+  Inputs are `TimedPrice { time, price }` sorted by ascending time; feed
+  log-prices for log-return covariance. The async-trading complement to
+  `covariance` — addresses the Epps caveat flagged in the semicovariance
+  article. (Python: 0.26.0.)
+
 ## [0.37.0] - 2026-09-07
 
 ### Added

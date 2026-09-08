@@ -78,6 +78,11 @@ from .semibeta import (
     semibeta_asymmetry,
 )
 from .meanrev import half_life, mean_reversion_speed, z_score
+from .hayashi import (
+    TimedPrice,
+    hayashi_yoshida_correlation,
+    hayashi_yoshida_covariance,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -271,6 +276,10 @@ __all__ = [
     "mean_reversion_speed",
     "half_life",
     "z_score",
+    # Hayashi-Yoshida (non-synchronous covariance)
+    "hayashi_yoshida_covariance",
+    "hayashi_yoshida_correlation",
+    "TimedPrice",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

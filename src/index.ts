@@ -141,3 +141,8 @@ export {
   semibetaAsymmetry,
 } from "./semibeta.ts";
 export { meanReversionSpeed, halfLife, zScore } from "./meanrev.ts";
+export type { TimedPrice } from "./hayashi.ts";
+export {
+  hayashiYoshidaCovariance,
+  hayashiYoshidaCorrelation,
+} from "./hayashi.ts";
