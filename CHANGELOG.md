@@ -4,6 +4,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.39.0] - 2026-09-09
+
+### Added
+- Absorption ratio (`absorption`) — the systemic-risk measure of Kritzman, Li,
+  Page & Rigobon 2011 (*Principal Components as a Measure of Systemic Risk*,
+  Journal of Portfolio Management 37(4), 112–126). `absorptionRatio(covariance,
+  numComponents)` returns the fraction of a covariance matrix's total variance
+  captured by its largest eigenvalues — the share of market movement absorbed by
+  the top principal components; a rising ratio flags a tightly-coupled, fragile
+  market. `numComponents` defaults to a fifth of the assets (the authors'
+  convention). `symmetricEigenvalues` exposes the underlying eigenvalues
+  (descending). Both run on a **dependency-free cyclic Jacobi eigensolver** for
+  real symmetric matrices — no linear-algebra library. Caps the covariance-matrix
+  cluster (`covariance`, `semicovariance`, `downsidecov`) with a portfolio-level
+  fragility gauge. (Python: 0.27.0.)
+
 ## [0.38.0] - 2026-09-08
 
 ### Added

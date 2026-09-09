@@ -83,6 +83,7 @@ from .hayashi import (
     hayashi_yoshida_correlation,
     hayashi_yoshida_covariance,
 )
+from .absorption import absorption_ratio, symmetric_eigenvalues
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -280,6 +281,9 @@ __all__ = [
     "hayashi_yoshida_covariance",
     "hayashi_yoshida_correlation",
     "TimedPrice",
+    # absorption ratio / systemic risk (Kritzman et al. 2011)
+    "absorption_ratio",
+    "symmetric_eigenvalues",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

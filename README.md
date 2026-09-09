@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -753,6 +753,29 @@ hayashiYoshidaCorrelation(x, y); // normalized by each series' own realized vari
 
 - `hayashiYoshidaCovariance` — sums return products over overlapping intervals; collapses to `realizedCovariance` on a shared grid
 - `hayashiYoshidaCorrelation` — synchronization-free correlation; `NaN` for a zero-variance series
+
+### Absorption ratio (systemic risk)
+
+Measure how tightly a market is coupled — the share of total variance its leading
+principal components absorb (Kritzman, Li, Page & Rigobon 2011). A dependency-free
+Jacobi eigensolver does the linear algebra:
+
+```ts
+import { absorptionRatio, symmetricEigenvalues } from "orderflow-metrics";
+
+const covariance = [ // symmetric covariance (or correlation) matrix of your assets
+  [4, 1, 2],
+  [1, 3, 0.5],
+  [2, 0.5, 5],
+];
+
+absorptionRatio(covariance, 1);   // 0.569 — top PC absorbs 57% of total variance
+absorptionRatio(covariance);      // default: a fifth of the assets (Kritzman et al.)
+symmetricEigenvalues(covariance); // [6.83.., 3.07.., 2.10..] descending
+```
+
+- `absorptionRatio` — fraction of variance in the top `numComponents` eigenvalues; a rising ratio flags a fragile, tightly-coupled market
+- `symmetricEigenvalues` — eigenvalues of a real symmetric matrix, descending, via dependency-free cyclic Jacobi rotations
 
 ## Python
 

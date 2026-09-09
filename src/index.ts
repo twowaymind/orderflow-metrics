@@ -146,3 +146,4 @@ export {
   hayashiYoshidaCovariance,
   hayashiYoshidaCorrelation,
 } from "./hayashi.ts";
+export { symmetricEigenvalues, absorptionRatio } from "./absorption.ts";
