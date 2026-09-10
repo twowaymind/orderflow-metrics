@@ -4,6 +4,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.40.0] - 2026-09-10
+
+### Added
+- HAR-RV realized-volatility forecasting (`har`) — the Heterogeneous
+  Autoregressive model of Corsi 2009 (*A Simple Approximate Long-Memory Model of
+  Realized Volatility*, Journal of Financial Econometrics 7(2), 174–196), the
+  standard benchmark for forecasting realized volatility. `harForecast(rv)` fits
+  `RVₜ₊₁ = β₀ + β_d·RV^(d) + β_w·RV^(w) + β_m·RV^(m)` by ordinary least squares over
+  the supplied history — daily, weekly (5) and monthly (22) averages of past
+  realized variance — and returns the one-step-ahead forecast with the fitted
+  coefficients. `harComponents(rv)` exposes the latest daily/weekly/monthly
+  aggregates; windows are configurable. The OLS solve uses a **dependency-free
+  Gaussian-elimination linear solver** (no linear-algebra library). Adds a
+  forecasting layer on top of the realized-variance suite (`volatility`,
+  `robustvol`, `kernel`, `tsrv`, `noise`). (Python: 0.28.0.)
+
 ## [0.39.0] - 2026-09-09
 
 ### Added

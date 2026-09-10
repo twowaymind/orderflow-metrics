@@ -84,6 +84,13 @@ from .hayashi import (
     hayashi_yoshida_covariance,
 )
 from .absorption import absorption_ratio, symmetric_eigenvalues
+from .har import (
+    HarCoefficients,
+    HarComponents,
+    HarForecast,
+    har_components,
+    har_forecast,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -284,6 +291,12 @@ __all__ = [
     # absorption ratio / systemic risk (Kritzman et al. 2011)
     "absorption_ratio",
     "symmetric_eigenvalues",
+    # HAR-RV realized-volatility forecasting (Corsi 2009)
+    "har_components",
+    "har_forecast",
+    "HarComponents",
+    "HarForecast",
+    "HarCoefficients",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

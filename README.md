@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -776,6 +776,24 @@ symmetricEigenvalues(covariance); // [6.83.., 3.07.., 2.10..] descending
 
 - `absorptionRatio` — fraction of variance in the top `numComponents` eigenvalues; a rising ratio flags a fragile, tightly-coupled market
 - `symmetricEigenvalues` — eigenvalues of a real symmetric matrix, descending, via dependency-free cyclic Jacobi rotations
+
+### HAR-RV volatility forecasting
+
+Forecast tomorrow's realized volatility from daily, weekly, and monthly averages of
+the past — the Heterogeneous Autoregressive model (Corsi 2009), the standard
+benchmark for realized-volatility forecasting. OLS fit via a dependency-free solver:
+
+```ts
+import { harForecast, harComponents } from "orderflow-metrics";
+
+const rv = [ /* per-period realized variances (or vols), oldest → newest */ ];
+
+harForecast(rv);   // { forecast, coefficients: { intercept, daily, weekly, monthly } }
+harComponents(rv); // { daily, weekly, monthly } — the latest RV^(d), RV^(w), RV^(m)
+```
+
+- `harForecast` — fits `RVₜ₊₁ = β₀ + β_d·RV^(d) + β_w·RV^(w) + β_m·RV^(m)` by OLS and returns the one-step-ahead forecast; `NaN` with fewer than `monthly + 4` observations
+- `harComponents` — the daily / weekly (5) / monthly (22) averages at the end of the series; windows are configurable
 
 ## Python
 

@@ -147,3 +147,5 @@ export {
   hayashiYoshidaCorrelation,
 } from "./hayashi.ts";
 export { symmetricEigenvalues, absorptionRatio } from "./absorption.ts";
+export type { HarOptions, HarComponents, HarForecast } from "./har.ts";
+export { harComponents, harForecast } from "./har.ts";
