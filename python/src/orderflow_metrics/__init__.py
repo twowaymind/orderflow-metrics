@@ -91,6 +91,7 @@ from .har import (
     har_components,
     har_forecast,
 )
+from .psliquidity import PSLiquidity, pastor_stambaugh_gamma
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -297,6 +298,9 @@ __all__ = [
     "HarComponents",
     "HarForecast",
     "HarCoefficients",
+    # Pastor-Stambaugh liquidity (return-reversal, 2003)
+    "pastor_stambaugh_gamma",
+    "PSLiquidity",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

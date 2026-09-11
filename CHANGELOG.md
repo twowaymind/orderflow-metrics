@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.41.0] - 2026-09-11
+
+### Added
+- Pástor-Stambaugh liquidity (`psliquidity`) — the return-reversal measure of
+  liquidity from Pástor & Stambaugh 2003 (*Liquidity Risk and Expected Stock
+  Returns*, Journal of Political Economy 111(3), 642–685). `pastorStambaughGamma(
+  returns, excessReturns, volumes)` fits the regression `rᵉₜ₊₁ = θ + φ·rₜ +
+  γ·sign(rᵉₜ)·vₜ` by ordinary least squares and returns `{ gamma, phi, intercept }`.
+  `gamma` is the liquidity measure: a stronger reversal of order-flow-induced price
+  moves gives a more negative γ, i.e. lower liquidity; γ near zero marks a deep,
+  liquid market. The daily building block of the Pástor-Stambaugh traded liquidity
+  factor. OLS via a **dependency-free Gaussian-elimination solver** — no
+  linear-algebra library. Complements the `amihud` illiquidity and order-book depth
+  tooling with a reversal-based liquidity lens. (Python: 0.29.0.)
+
 ## [0.40.0] - 2026-09-10
 
 ### Added

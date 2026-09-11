@@ -22,7 +22,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Order book** — [Order book](#order-book)
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
-- **Liquidity** — [Liquidity](#liquidity)
+- **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
 - **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
 
@@ -221,6 +221,21 @@ amihudIlliquidity([
 ```
 
 - `amihudIlliquidity` — Amihud (2002): average |return| / volume across periods
+
+### Pástor-Stambaugh liquidity (return reversal)
+
+Measure liquidity from the reversal that follows order flow — the classic
+return-reversal regression of Pástor & Stambaugh (2003). Dependency-free OLS:
+
+```ts
+import { pastorStambaughGamma } from "orderflow-metrics";
+
+// aligned daily series (one month per estimate): raw returns, excess returns, volume
+pastorStambaughGamma(returns, excessReturns, volumes);
+// { gamma, phi, intercept } — γ is the liquidity measure (more negative = less liquid)
+```
+
+- `pastorStambaughGamma` — fits `rᵉₜ₊₁ = θ + φ·rₜ + γ·sign(rᵉₜ)·vₜ` by OLS; `gamma` is the liquidity measure (stronger post-trade reversal ⇒ more negative ⇒ less liquid); `NaN` with fewer than four usable pairs
 
 ## Volatility
 
