@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -558,6 +558,28 @@ relativeJumpVariation(returns);  // jump share of RV, in [0, 1]
 
 All three return 0 for fewer than two returns (and a jumpless series gives a jump
 variation of 0).
+
+### Lee-Mykland jump test (timing)
+
+Bipower variation tells you *how much* jump there was; the Lee & Mykland (2008)
+test tells you *which* returns are jumps and *when*. Each return is standardized by
+a local, jump-robust volatility estimate, and the maximum statistic is compared to
+a Gumbel critical value that controls the family-wide false-positive rate:
+
+```ts
+import { leeMyklandStatistics, leeMyklandCriticalValue, leeMyklandJumps } from "orderflow-metrics";
+
+// log returns; window K defaults to √n, override to match your sampling frequency
+leeMyklandStatistics(returns, { windowSize: 5 });        // L(i) series (NaN before the first window)
+leeMyklandCriticalValue(20, 0.01);                       // ≈ 3.8691 — the jump threshold
+leeMyklandJumps(returns, { windowSize: 5 });             // [{ index, statistic, direction }]
+```
+
+- `leeMyklandStatistics` — the standardized statistics `L(i) = rᵢ / σ̂(tᵢ)`; the first `K−1` entries (and any degenerate-window entry) are `NaN`
+- `leeMyklandCriticalValue` — the extreme-value threshold `Sₙ·β* + Cₙ` for a given number of test points and significance level
+- `leeMyklandJumps` — the returns whose `|L(i)|` exceeds the threshold, each with its index and direction (+1 up / −1 down)
+
+Complements the aggregate bipower split above with per-return jump *timing*.
 
 ## Realized semivariance
 

@@ -4,6 +4,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.42.0] - 2026-09-12
+
+### Added
+- Lee-Mykland nonparametric jump test (`leemykland`) — detecting *individual*
+  jumps and their timing, from Lee & Mykland 2008 (*Jumps in Financial Markets: A
+  New Nonparametric Test and Jump Dynamics*, Review of Financial Studies 21(6),
+  2535–2563). Where bipower variation (`jumps`) measures how much of a sample's
+  variance came from jumps, this test flags *which* returns are jumps and *when*.
+  For each return it forms the standardized statistic `L(i) = rᵢ / σ̂(tᵢ)`, with
+  `σ̂(tᵢ)` a jump-robust bipower estimate of local volatility over the `K` returns
+  *before* `i` (the tested return excluded, so a jump cannot inflate its own
+  benchmark). Under the continuous-path null the maximum of `|L|` follows a Gumbel
+  law, giving an extreme-value critical value `Sₙ·β* + Cₙ` that controls the
+  chance of even one false jump across the whole sample. `leeMyklandStatistics(
+  returns, opts?)` → the L(i) series; `leeMyklandCriticalValue(numStatistics,
+  significance?)` → the threshold; `leeMyklandJumps(returns, opts?)` → the detected
+  jumps `{ index, statistic, direction }`. Window `K` defaults to `√n` (Lee &
+  Mykland's asymptotic rule); override to match your sampling frequency.
+  Dependency-free. Complements the aggregate `jumps` (bipower) split with per-return
+  jump timing. (Python: 0.30.0.)
+
 ## [0.41.0] - 2026-09-11
 
 ### Added
