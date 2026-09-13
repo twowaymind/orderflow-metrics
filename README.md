@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -831,6 +831,29 @@ harComponents(rv); // { daily, weekly, monthly } — the latest RV^(d), RV^(w), 
 
 - `harForecast` — fits `RVₜ₊₁ = β₀ + β_d·RV^(d) + β_w·RV^(w) + β_m·RV^(m)` by OLS and returns the one-step-ahead forecast; `NaN` with fewer than `monthly + 4` observations
 - `harComponents` — the daily / weekly (5) / monthly (22) averages at the end of the series; windows are configurable
+
+### Value-at-Risk & Expected Shortfall
+
+The standard tail-risk numbers — VaR (the loss not exceeded with probability `c`) and
+Expected Shortfall (the average loss beyond it, the coherent measure Basel adopted) —
+plus the Cornish-Fisher modified VaR that corrects the Gaussian figure for skewness and
+fat tails. All returned as positive loss magnitudes:
+
+```ts
+import {
+  valueAtRisk, expectedShortfall, gaussianValueAtRisk, cornishFisherValueAtRisk,
+} from "orderflow-metrics";
+
+valueAtRisk(returns, 0.95);              // historical 95% VaR (empirical)
+expectedShortfall(returns, 0.95);        // historical 95% ES / Conditional VaR
+gaussianValueAtRisk(returns, 0.95);      // parametric normal VaR
+cornishFisherValueAtRisk(returns, 0.95); // skew/kurtosis-adjusted VaR
+```
+
+- `valueAtRisk` / `expectedShortfall` — historical (no distributional assumption); ES ≥ VaR
+- `gaussianValueAtRisk` — `−(μ + z·σ)` with `z = Φ⁻¹(1 − level)`
+- `cornishFisherValueAtRisk` — `z` expanded with sample skewness and excess kurtosis; sits above the Gaussian VaR for a left-skewed, fat-tailed series
+- `inverseNormalCdf` — dependency-free inverse normal CDF (Acklam, ~1e-9), a companion to `standardNormalCdf`
 
 ## Python
 

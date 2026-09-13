@@ -4,6 +4,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.43.0] - 2026-09-13
+
+### Added
+- Value-at-Risk & Expected Shortfall (`valueatrisk`) — the standard tail-risk
+  measures, including the Cornish-Fisher modified VaR that corrects the Gaussian
+  figure for skewness and fat tails. VaR at confidence `c` is the loss not exceeded
+  with probability `c`; Expected Shortfall (Conditional VaR) is the average loss in
+  that tail — the coherent measure the Basel framework adopted. Three lenses:
+  `valueAtRisk` / `expectedShortfall` (historical/empirical, no distributional
+  assumption), `gaussianValueAtRisk` (parametric normal `−(μ + z·σ)`), and
+  `cornishFisherValueAtRisk` (the normal quantile expanded with sample skewness and
+  excess kurtosis, `z_cf = z + (z²−1)/6·S + (z³−3z)/24·K − (2z³−5z)/36·S²`; Favre &
+  Galéano 2002) — which lifts VaR above the Gaussian number for a left-skewed,
+  fat-tailed series. All returned as positive loss magnitudes. Ships a
+  dependency-free inverse normal CDF `inverseNormalCdf` (Acklam, ~1e-9 accuracy) — a
+  reusable companion to the `standardNormalCdf` in `vpin`. First VaR/ES tooling in the
+  library; no statistics dependency. (Python: 0.31.0.)
+
 ## [0.42.0] - 2026-09-12
 
 ### Added

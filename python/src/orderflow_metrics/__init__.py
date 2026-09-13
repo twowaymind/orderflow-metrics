@@ -98,6 +98,13 @@ from .leemykland import (
     lee_mykland_jumps,
     lee_mykland_statistics,
 )
+from .valueatrisk import (
+    inverse_normal_cdf,
+    value_at_risk,
+    expected_shortfall,
+    gaussian_value_at_risk,
+    cornish_fisher_value_at_risk,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -312,6 +319,12 @@ __all__ = [
     "lee_mykland_critical_value",
     "lee_mykland_jumps",
     "LeeMyklandJump",
+    # Value-at-Risk & Expected Shortfall (+ Cornish-Fisher modified VaR)
+    "inverse_normal_cdf",
+    "value_at_risk",
+    "expected_shortfall",
+    "gaussian_value_at_risk",
+    "cornish_fisher_value_at_risk",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

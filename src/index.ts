@@ -157,3 +157,10 @@ export {
   leeMyklandCriticalValue,
   leeMyklandJumps,
 } from "./leemykland.ts";
+export {
+  inverseNormalCdf,
+  valueAtRisk,
+  expectedShortfall,
+  gaussianValueAtRisk,
+  cornishFisherValueAtRisk,
+} from "./valueatrisk.ts";
