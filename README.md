@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -854,6 +854,28 @@ cornishFisherValueAtRisk(returns, 0.95); // skew/kurtosis-adjusted VaR
 - `gaussianValueAtRisk` — `−(μ + z·σ)` with `z = Φ⁻¹(1 − level)`
 - `cornishFisherValueAtRisk` — `z` expanded with sample skewness and excess kurtosis; sits above the Gaussian VaR for a left-skewed, fat-tailed series
 - `inverseNormalCdf` — dependency-free inverse normal CDF (Acklam, ~1e-9), a companion to `standardNormalCdf`
+
+### Risk-adjusted performance
+
+Sharpe, Sortino, maximum drawdown, and Calmar — the headline reward-to-risk numbers.
+Pass simple (not log) per-period returns:
+
+```ts
+import {
+  sharpeRatio, annualizedSharpeRatio, sortinoRatio, maxDrawdown, calmarRatio,
+} from "orderflow-metrics";
+
+sharpeRatio(returns);                 // per-period Sharpe (sample stdev)
+annualizedSharpeRatio(returns, 252);  // × √periodsPerYear
+sortinoRatio(returns);                // downside-deviation denominator only
+maxDrawdown(returns);                 // largest peak-to-trough decline, in [0, 1]
+calmarRatio(returns, 252);            // geometric annualized return ÷ max drawdown
+```
+
+- `sharpeRatio` / `annualizedSharpeRatio` — mean excess return over total volatility; `NaN` for < 2 returns or a flat series
+- `sortinoRatio` — excess return over downside deviation (target semideviation); rewards upside; `NaN` with no downside
+- `maxDrawdown` — worst peak-to-trough drop of the compounded equity curve `∏(1 + rₜ)`
+- `calmarRatio` — annualized return per unit of maximum drawdown
 
 ## Python
 

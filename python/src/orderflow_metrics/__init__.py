@@ -105,6 +105,13 @@ from .valueatrisk import (
     gaussian_value_at_risk,
     cornish_fisher_value_at_risk,
 )
+from .performance import (
+    sharpe_ratio,
+    annualized_sharpe_ratio,
+    sortino_ratio,
+    max_drawdown,
+    calmar_ratio,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -325,6 +332,12 @@ __all__ = [
     "expected_shortfall",
     "gaussian_value_at_risk",
     "cornish_fisher_value_at_risk",
+    # Risk-adjusted performance ratios (Sharpe, Sortino, drawdown, Calmar)
+    "sharpe_ratio",
+    "annualized_sharpe_ratio",
+    "sortino_ratio",
+    "max_drawdown",
+    "calmar_ratio",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

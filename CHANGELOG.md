@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.44.0] - 2026-09-14
+
+### Added
+- Risk-adjusted performance ratios (`performance`) — the headline numbers that put
+  return and risk on the same footing: `sharpeRatio` (Sharpe 1966/1994, mean excess
+  return over total volatility, sample stdev), `annualizedSharpeRatio` (scaled by
+  `√periodsPerYear`), `sortinoRatio` (Sortino & Price 1994, excess return over the
+  downside deviation / target semideviation only — upside volatility isn't penalized),
+  `maxDrawdown` (largest peak-to-trough decline of the compounded equity curve, a
+  positive fraction), and `calmarRatio` (geometric annualized return over maximum
+  drawdown). Conventions are documented for reproducibility. Complements the
+  `valueatrisk` tail-risk tooling with reward-to-risk measurement. Dependency-free.
+  (Python: 0.32.0.)
+
 ## [0.43.0] - 2026-09-13
 
 ### Added

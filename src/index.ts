@@ -164,3 +164,10 @@ export {
   gaussianValueAtRisk,
   cornishFisherValueAtRisk,
 } from "./valueatrisk.ts";
+export {
+  sharpeRatio,
+  annualizedSharpeRatio,
+  sortinoRatio,
+  maxDrawdown,
+  calmarRatio,
+} from "./performance.ts";
