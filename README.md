@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -876,6 +876,27 @@ calmarRatio(returns, 252);            // geometric annualized return ÷ max draw
 - `sortinoRatio` — excess return over downside deviation (target semideviation); rewards upside; `NaN` with no downside
 - `maxDrawdown` — worst peak-to-trough drop of the compounded equity curve `∏(1 + rₜ)`
 - `calmarRatio` — annualized return per unit of maximum drawdown
+
+### Benchmark-relative performance
+
+Alpha, Treynor, tracking error, and the information ratio — a return stream judged
+against a benchmark (index, factor, or a strategy to beat). Pass paired per-period returns:
+
+```ts
+import {
+  jensensAlpha, treynorRatio, trackingError, informationRatio,
+} from "orderflow-metrics";
+
+jensensAlpha(returns, benchmark);      // CAPM alpha (return the benchmark can't explain)
+treynorRatio(returns, benchmark);      // excess return per unit of beta
+trackingError(returns, benchmark);     // sample stdev of active return (r − m)
+informationRatio(returns, benchmark);  // mean active return ÷ tracking error
+```
+
+- `jensensAlpha` — CAPM intercept `mean(r − rf) − β·mean(m − rf)`; positive = skill beyond market exposure
+- `treynorRatio` — reward per unit of systematic risk (β), not total volatility
+- `trackingError` — how tightly the stream hugs its benchmark
+- `informationRatio` — active reward per unit of active risk; `NaN` when the stream matches the benchmark exactly
 
 ## Python
 

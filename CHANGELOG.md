@@ -4,6 +4,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.45.0] - 2026-09-15
+
+### Added
+- Benchmark-relative performance (`benchmark`) — judging a return stream against a
+  benchmark rather than on its own: `jensensAlpha` (Jensen 1968, the CAPM regression
+  intercept `mean(r − rf) − β·mean(m − rf)` — return the benchmark can't explain),
+  `treynorRatio` (Treynor 1965, mean excess return per unit of *systematic* risk β),
+  `trackingError` (sample stdev of the active return `rₜ − mₜ`), and `informationRatio`
+  (Grinold & Kahn, mean active return over tracking error — active reward per unit of
+  active risk). β is the OLS slope `Σ(rₜ−r̄)(mₜ−m̄)/Σ(mₜ−m̄)²`; series are paired to
+  their common length. Complements the standalone `performance` ratios with
+  benchmark-relative alpha and skill measurement. Dependency-free. (Python: 0.33.0.)
+
 ## [0.44.0] - 2026-09-14
 
 ### Added

@@ -112,6 +112,12 @@ from .performance import (
     max_drawdown,
     calmar_ratio,
 )
+from .benchmark import (
+    jensens_alpha,
+    treynor_ratio,
+    tracking_error,
+    information_ratio,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -338,6 +344,11 @@ __all__ = [
     "sortino_ratio",
     "max_drawdown",
     "calmar_ratio",
+    # Benchmark-relative performance (alpha, Treynor, tracking error, info ratio)
+    "jensens_alpha",
+    "treynor_ratio",
+    "tracking_error",
+    "information_ratio",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

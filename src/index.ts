@@ -171,3 +171,9 @@ export {
   maxDrawdown,
   calmarRatio,
 } from "./performance.ts";
+export {
+  jensensAlpha,
+  treynorRatio,
+  trackingError,
+  informationRatio,
+} from "./benchmark.ts";
