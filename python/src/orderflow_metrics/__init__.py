@@ -118,6 +118,11 @@ from .benchmark import (
     tracking_error,
     information_ratio,
 )
+from .kelly import (
+    kelly_fraction,
+    kelly_leverage,
+    growth_optimal_leverage,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -349,6 +354,10 @@ __all__ = [
     "treynor_ratio",
     "tracking_error",
     "information_ratio",
+    # Kelly criterion / growth-optimal position sizing
+    "kelly_fraction",
+    "kelly_leverage",
+    "growth_optimal_leverage",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

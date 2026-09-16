@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.46.0] - 2026-09-16
+
+### Added
+- Kelly criterion / growth-optimal position sizing (`kelly`) — how *much* to bet, the
+  complement to the risk and performance metrics that judge *whether* to. `kellyFraction`
+  is the classic discrete stake `f* = p − (1 − p)/b` for a bet that wins with probability
+  `p` at odds `b` (negative = no edge, skip). `kellyLeverage` is the continuous
+  mean-variance form `μ / σ²`. `growthOptimalLeverage` finds the *exact* empirical
+  optimum — the leverage λ that maximizes realized mean log-growth
+  `(1/N)·Σ log(1 + λ·rₜ)` — with a dependency-free golden-section search over the range
+  where every `1 + λ·rₜ` stays positive, making no Gaussian assumption. A fresh theme
+  (money management) alongside the risk (`valueatrisk`) and performance
+  (`performance`, `benchmark`) tooling. Dependency-free. (Python: 0.34.0.)
+
 ## [0.45.0] - 2026-09-15
 
 ### Added

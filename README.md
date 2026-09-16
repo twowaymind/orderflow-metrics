@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -897,6 +897,25 @@ informationRatio(returns, benchmark);  // mean active return ÷ tracking error
 - `treynorRatio` — reward per unit of systematic risk (β), not total volatility
 - `trackingError` — how tightly the stream hugs its benchmark
 - `informationRatio` — active reward per unit of active risk; `NaN` when the stream matches the benchmark exactly
+
+### Kelly criterion (position sizing)
+
+How much to bet for maximum long-run growth — the size that maximizes expected log
+wealth:
+
+```ts
+import { kellyFraction, kellyLeverage, growthOptimalLeverage } from "orderflow-metrics";
+
+kellyFraction(0.6, 2.0);        // 0.4 — stake for a 60% bet at 2:1 odds (f* = p − (1−p)/b)
+kellyLeverage(0.001, 0.0004);   // 2.5 — mean-variance leverage μ/σ²
+growthOptimalLeverage(returns); // exact empirical optimum via golden-section search
+```
+
+- `kellyFraction` — discrete Kelly stake; a negative result means no edge, don't bet
+- `kellyLeverage` — continuous mean-variance leverage `μ / σ²`
+- `growthOptimalLeverage` — the leverage maximizing realized mean log-growth `(1/N)·Σ log(1 + λ·rₜ)`, found dependency-free; `NaN` if the returns all share one sign (optimum unbounded)
+
+Kelly is aggressive by design — practitioners often size at a fraction of it (half-Kelly) for far lower drawdown.
 
 ## Python
 

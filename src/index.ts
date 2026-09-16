@@ -177,3 +177,8 @@ export {
   trackingError,
   informationRatio,
 } from "./benchmark.ts";
+export {
+  kellyFraction,
+  kellyLeverage,
+  growthOptimalLeverage,
+} from "./kelly.ts";
