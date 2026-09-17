@@ -253,14 +253,19 @@ annualizedVolatility(minuteReturns, 252 * 390); // scaled to a year
 ## Market efficiency
 
 ```ts
-import { varianceRatio, autocorrelation } from "orderflow-metrics";
+import { varianceRatio, autocorrelation, varianceRatioTest } from "orderflow-metrics";
 
 varianceRatio(returns, 2);   // <1 mean-reverting · ~1 random walk · >1 trending
 autocorrelation(returns, 1); // lag-1 return autocorrelation
+
+// the formal Lo-MacKinlay test around the ratio:
+varianceRatioTest(returns, 2);
+// { ratio, zStatistic, robustZStatistic, pValue, robustPValue }
 ```
 
 - `varianceRatio` — Lo-MacKinlay variance ratio over overlapping q-period returns
 - `autocorrelation` — lag-k autocorrelation of a return series
+- `varianceRatioTest` — the random-walk hypothesis test: the ratio plus the homoskedastic and heteroskedasticity-robust z-statistics and two-sided p-values (Lo & MacKinlay 1988); a small `robustPValue` rejects the random walk, the ratio's side tells you momentum (>1) or mean reversion (<1)
 
 ## Order book
 

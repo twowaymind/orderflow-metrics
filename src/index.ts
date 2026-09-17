@@ -182,3 +182,5 @@ export {
   kellyLeverage,
   growthOptimalLeverage,
 } from "./kelly.ts";
+export type { VarianceRatioResult } from "./vrtest.ts";
+export { varianceRatioTest } from "./vrtest.ts";

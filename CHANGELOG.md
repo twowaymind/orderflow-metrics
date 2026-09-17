@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.47.0] - 2026-09-17
+
+### Added
+- Lo-MacKinlay variance-ratio test (`vrtest`) — the formal random-walk / market-
+  efficiency test around the descriptive `varianceRatio`. Lo & MacKinlay (1988) ask
+  whether `VR(q) = σ²(q)/(q·σ²(1))` is far enough from 1 to reject a random walk (VR > 1
+  = momentum, VR < 1 = mean reversion). `varianceRatioTest(returns, q)` returns the ratio
+  plus the homoskedastic (`zStatistic`) and heteroskedasticity-robust (`robustZStatistic`)
+  z-statistics — the robust form is the one to trust on real, volatility-clustering
+  returns — each with a two-sided p-value. Uses the overlapping, bias-corrected estimator
+  (verified against the reference implementation to ~1e-9 on the z-statistics) and the
+  dependency-free `standardNormalCdf` from `vpin` for the p-values. Turns the efficiency
+  module's descriptive ratio into a proper hypothesis test. (Python: 0.35.0.)
+
 ## [0.46.0] - 2026-09-16
 
 ### Added
