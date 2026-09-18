@@ -124,6 +124,12 @@ from .kelly import (
     growth_optimal_leverage,
 )
 from .vrtest import variance_ratio_test, VarianceRatioResult
+from .vartest import (
+    kupiec_pof,
+    christoffersen_independence,
+    christoffersen_conditional_coverage,
+    VarBacktestResult,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -362,6 +368,11 @@ __all__ = [
     # Lo-MacKinlay variance-ratio test (random walk / market efficiency)
     "variance_ratio_test",
     "VarianceRatioResult",
+    # VaR backtesting (Kupiec POF, Christoffersen independence & conditional coverage)
+    "kupiec_pof",
+    "christoffersen_independence",
+    "christoffersen_conditional_coverage",
+    "VarBacktestResult",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

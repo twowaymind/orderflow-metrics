@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [VaR backtesting](#var-backtesting) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -859,6 +859,25 @@ cornishFisherValueAtRisk(returns, 0.95); // skew/kurtosis-adjusted VaR
 - `gaussianValueAtRisk` — `−(μ + z·σ)` with `z = Φ⁻¹(1 − level)`
 - `cornishFisherValueAtRisk` — `z` expanded with sample skewness and excess kurtosis; sits above the Gaussian VaR for a left-skewed, fat-tailed series
 - `inverseNormalCdf` — dependency-free inverse normal CDF (Acklam, ~1e-9), a companion to `standardNormalCdf`
+
+### VaR backtesting
+
+Once you have a VaR forecast, prove it: a p% VaR should be breached about p% of the time,
+and breaches should be independent (not clustered). Feed a 0/1 breach series (1 = the
+loss exceeded the VaR):
+
+```ts
+import { kupiecPOF, christoffersenIndependence, christoffersenConditionalCoverage } from "orderflow-metrics";
+
+kupiecPOF(breaches, 0.05);                        // right *number* of breaches? (χ²₁)
+christoffersenIndependence(breaches);             // do breaches *cluster*? (χ²₁)
+christoffersenConditionalCoverage(breaches, 0.05); // both together (χ²₂)
+// each → { exceptions, observations, statistic, pValue } — small pValue rejects the model
+```
+
+- `kupiecPOF` — Kupiec (1995) proportion-of-failures / unconditional-coverage test
+- `christoffersenIndependence` — Christoffersen (1998) test for clustered breaches
+- `christoffersenConditionalCoverage` — the joint coverage-and-independence test; a model can pass the count and still fail here by breaching in bursts
 
 ### Risk-adjusted performance
 

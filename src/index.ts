@@ -184,3 +184,9 @@ export {
 } from "./kelly.ts";
 export type { VarianceRatioResult } from "./vrtest.ts";
 export { varianceRatioTest } from "./vrtest.ts";
+export type { VarBacktestResult } from "./vartest.ts";
+export {
+  kupiecPOF,
+  christoffersenIndependence,
+  christoffersenConditionalCoverage,
+} from "./vartest.ts";

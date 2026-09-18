@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.48.0] - 2026-09-18
+
+### Added
+- VaR backtesting (`vartest`) — validating the `valueatrisk` forecasts against what
+  actually happened, the Basel backtesting checks. `kupiecPOF` (Kupiec 1995) tests
+  *unconditional coverage* — the right *number* of breaches, χ²(1). `christoffersenIndependence`
+  (Christoffersen 1998) tests whether breaches *cluster* in time, χ²(1). `christoffersenConditionalCoverage`
+  is the joint test of coverage and independence together, χ²(2) — a model can pass the
+  count and still fail here by breaching in bursts. Each takes a 0/1 (or boolean) breach
+  series and returns the likelihood-ratio statistic and p-value; the χ² p-values use exact
+  closed forms (χ²₁ via the dependency-free `standardNormalCdf`, χ²₂ = e^(−x/2)), no
+  statistics library. Verified against `scipy.stats.chi2` to ~1e-9 on the statistics.
+  Closes the loop on the tail-risk tooling: measure VaR, then prove it. (Python: 0.36.0.)
+
 ## [0.47.0] - 2026-09-17
 
 ### Added
