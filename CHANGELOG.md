@@ -4,6 +4,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.49.0] - 2026-09-19
+
+### Added
+- Portmanteau autocorrelation tests (`ljungbox`) — a formal white-noise test over the
+  *whole* autocorrelation function up to lag h, lifting `efficiency`'s single-lag
+  `autocorrelation` to a joint hypothesis test. `ljungBox` (Ljung & Box 1978) is the
+  standard portmanteau statistic Q = n(n+2)·Σ ρ̂ₖ²/(n−k), χ²(h); `boxPierce` (Box &
+  Pierce 1970) is the original unweighted Q = n·Σ ρ̂ₖ², χ²(h). A small p-value rejects
+  "the series is serially uncorrelated": run on returns it flags predictability
+  (momentum / mean-reversion), on squared returns volatility clustering, on model
+  residuals misspecification. Optional `fittedParams` reduces the degrees of freedom to
+  h − (p + q) for ARMA(p, q) residuals, as Ljung-Box prescribes. Ships a general-df
+  `chiSquareSurvival` — an exact, dependency-free regularized incomplete gamma (Lanczos
+  log-Γ + series/continued-fraction split) valid for *any* degrees of freedom, a reusable
+  upgrade over `vartest`'s df∈{1,2} closed forms. Verified against
+  `statsmodels.stats.diagnostic.acorr_ljungbox` and `scipy.stats.chi2.sf` to ~1e-9 on the
+  statistics and ~1e-15 on the χ² tail. (Python: 0.37.0.)
+
 ## [0.48.0] - 2026-09-18
 
 ### Added

@@ -21,7 +21,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [VaR backtesting](#var-backtesting) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
-- **Market efficiency** — [Market efficiency](#market-efficiency) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
+- **Market efficiency** — [Market efficiency](#market-efficiency) · [Portmanteau autocorrelation tests](#portmanteau-autocorrelation-tests) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
 - **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
@@ -266,6 +266,32 @@ varianceRatioTest(returns, 2);
 - `varianceRatio` — Lo-MacKinlay variance ratio over overlapping q-period returns
 - `autocorrelation` — lag-k autocorrelation of a return series
 - `varianceRatioTest` — the random-walk hypothesis test: the ratio plus the homoskedastic and heteroskedasticity-robust z-statistics and two-sided p-values (Lo & MacKinlay 1988); a small `robustPValue` rejects the random walk, the ratio's side tells you momentum (>1) or mean reversion (<1)
+
+### Portmanteau autocorrelation tests
+
+Where `autocorrelation` reads a single lag, the portmanteau tests roll the *whole*
+autocorrelation function up to lag h into one white-noise hypothesis test:
+
+```ts
+import { ljungBox, boxPierce, chiSquareSurvival } from "orderflow-metrics";
+
+ljungBox(returns, 10);
+// { statistic, degreesOfFreedom: 10, pValue }  — small pValue ⇒ serial correlation
+
+// volatility clustering: run it on squared returns
+ljungBox(returns.map((r) => r * r), 10);
+
+// on ARMA(p, q) residuals, drop p+q degrees of freedom:
+ljungBox(residuals, 10, /* fittedParams = p+q */ 2);
+
+boxPierce(returns, 10);        // the original unweighted statistic
+chiSquareSurvival(18.2, 10);   // exact χ² upper tail for any df (reusable)
+```
+
+- `ljungBox` — Ljung-Box portmanteau test (Ljung & Box 1978), Q = n(n+2)·Σ ρ̂ₖ²/(n−k), χ²(h); a small p-value rejects "serially uncorrelated" — return predictability, or (on squared returns) volatility clustering, or (on residuals) model misspecification
+- `boxPierce` — Box-Pierce (Box & Pierce 1970), the original Q = n·Σ ρ̂ₖ², χ²(h), kept for completeness
+- `chiSquareSurvival` — exact dependency-free χ² upper-tail P(χ²_df > x) for **any** degrees of freedom (regularized incomplete gamma); a reusable primitive
+- optional `fittedParams` reduces the degrees of freedom to h − (p + q) for ARMA(p, q) residuals
 
 ## Order book
 

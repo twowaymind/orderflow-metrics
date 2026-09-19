@@ -130,6 +130,12 @@ from .vartest import (
     christoffersen_conditional_coverage,
     VarBacktestResult,
 )
+from .ljungbox import (
+    ljung_box,
+    box_pierce,
+    chi_square_survival,
+    PortmanteauResult,
+)
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -373,6 +379,11 @@ __all__ = [
     "christoffersen_independence",
     "christoffersen_conditional_coverage",
     "VarBacktestResult",
+    # portmanteau autocorrelation tests (Ljung-Box, Box-Pierce)
+    "ljung_box",
+    "box_pierce",
+    "chi_square_survival",
+    "PortmanteauResult",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

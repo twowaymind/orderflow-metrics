@@ -190,3 +190,5 @@ export {
   christoffersenIndependence,
   christoffersenConditionalCoverage,
 } from "./vartest.ts";
+export type { PortmanteauResult } from "./ljungbox.ts";
+export { ljungBox, boxPierce, chiSquareSurvival } from "./ljungbox.ts";
