@@ -4,6 +4,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.50.0] - 2026-09-21
+
+### Added
+- Augmented Dickey-Fuller unit-root test (`adf`) — the stationarity test underneath every
+  mean-reversion / pairs-trading claim. `augmentedDickeyFuller(series, lags, regression)`
+  regresses Δyₜ on the lagged level yₜ₋₁, `lags` lagged differences (the Said-Dickey 1984
+  augmentation), and the deterministic terms, then returns the t-statistic on the lagged
+  level — small (below the Dickey-Fuller critical value ⇒ small p-value) rejects the unit
+  root, i.e. the series is stationary / mean-reverting. `regression` is `"c"` (constant,
+  the default, for a spread reverting to a level) or `"ct"` (constant + linear trend).
+  The result carries the statistic, the MacKinnon (1994/2010) p-value, the augmentation
+  order, the regression observation count, and the 1%/5%/10% critical values. Fully
+  dependency-free — OLS via a hand-rolled Gauss-Jordan inverse, the p-value's normal CDF
+  reusing `standardNormalCdf`, and MacKinnon's response-surface coefficients embedded.
+  Verified against `statsmodels.tsa.stattools.adfuller` to ~1e-13 on the statistic and
+  exactly on the critical values. Completes the market-efficiency / time-series cluster
+  (`varianceRatioTest`, `ljungBox`, `meanReversionSpeed`) with the decisive stationarity
+  test. (Python: 0.38.0.)
+
 ## [0.49.0] - 2026-09-19
 
 ### Added

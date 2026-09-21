@@ -136,6 +136,7 @@ from .ljungbox import (
     chi_square_survival,
     PortmanteauResult,
 )
+from .adf import augmented_dickey_fuller, AdfResult
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -384,6 +385,9 @@ __all__ = [
     "box_pierce",
     "chi_square_survival",
     "PortmanteauResult",
+    # Augmented Dickey-Fuller unit-root test (stationarity / pairs trading)
+    "augmented_dickey_fuller",
+    "AdfResult",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

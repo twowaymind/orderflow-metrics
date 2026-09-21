@@ -192,3 +192,5 @@ export {
 } from "./vartest.ts";
 export type { PortmanteauResult } from "./ljungbox.ts";
 export { ljungBox, boxPierce, chiSquareSurvival } from "./ljungbox.ts";
+export type { AdfRegression, AdfResult } from "./adf.ts";
+export { augmentedDickeyFuller } from "./adf.ts";

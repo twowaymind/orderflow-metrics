@@ -21,7 +21,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
 - **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [VaR backtesting](#var-backtesting) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
-- **Market efficiency** — [Market efficiency](#market-efficiency) · [Portmanteau autocorrelation tests](#portmanteau-autocorrelation-tests) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
+- **Market efficiency** — [Market efficiency](#market-efficiency) · [Portmanteau autocorrelation tests](#portmanteau-autocorrelation-tests) · [Augmented Dickey-Fuller unit-root test](#augmented-dickey-fuller-unit-root-test) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
 - **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
@@ -292,6 +292,27 @@ chiSquareSurvival(18.2, 10);   // exact χ² upper tail for any df (reusable)
 - `boxPierce` — Box-Pierce (Box & Pierce 1970), the original Q = n·Σ ρ̂ₖ², χ²(h), kept for completeness
 - `chiSquareSurvival` — exact dependency-free χ² upper-tail P(χ²_df > x) for **any** degrees of freedom (regularized incomplete gamma); a reusable primitive
 - optional `fittedParams` reduces the degrees of freedom to h − (p + q) for ARMA(p, q) residuals
+
+### Augmented Dickey-Fuller unit-root test
+
+Before you trade a spread as mean-reverting, test that it actually reverts — that it is
+*stationary* and not a random walk:
+
+```ts
+import { augmentedDickeyFuller } from "orderflow-metrics";
+
+const adf = augmentedDickeyFuller(spread, /* lags */ 1, "c");
+// { statistic, pValue, usedLag, nobs, criticalValues: { "1%", "5%", "10%" }, regression }
+
+if (adf.pValue < 0.05) {
+  // reject the unit root ⇒ spread is stationary / mean-reverting — safe to trade the reversion
+}
+```
+
+- `augmentedDickeyFuller` — the ADF test (Dickey & Fuller 1979; Said & Dickey 1984): regresses Δyₜ on the lagged level, `lags` lagged differences, and the deterministic terms, and returns the t-statistic on the lagged level; a statistic below the Dickey-Fuller critical value (small p-value) rejects the unit root ⇒ stationary / mean-reverting
+- `lags` — the augmentation order absorbing serial correlation in Δy (0 = plain Dickey-Fuller)
+- `regression` — `"c"` (constant, default; a spread reverting to a level) or `"ct"` (constant + linear trend; reverting around a drift)
+- p-value and critical values use MacKinnon's (1994/2010) response surfaces; pairs with `meanReversionSpeed`, `varianceRatioTest` and `ljungBox`
 
 ## Order book
 
