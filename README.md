@@ -24,7 +24,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Portmanteau autocorrelation tests](#portmanteau-autocorrelation-tests) · [Augmented Dickey-Fuller unit-root test](#augmented-dickey-fuller-unit-root-test) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
-- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
+- **Cross-asset** — [Realized covariance, correlation & beta](#realized-covariance-correlation--beta) · [Ledoit-Wolf shrinkage covariance](#ledoit-wolf-shrinkage-covariance) · [Realized semicovariance](#realized-semicovariance) · [Downside & upside beta](#downside--upside-beta) · [Downside covariance & correlation matrices](#downside-covariance--correlation-matrices) · [Realized semibetas](#realized-semibetas) · [Hayashi-Yoshida covariance (non-synchronous)](#hayashi-yoshida-covariance-non-synchronous) · [Absorption ratio (systemic risk)](#absorption-ratio-systemic-risk)
 
 Runnable quickstarts live in [`examples/`](examples/).
 
@@ -732,6 +732,30 @@ realizedBeta(asset, market); // Σa·m / Σm² — sensitivity of asset to marke
 
 The two series are paired element-wise over their common length, so align them to
 the same sampling grid first; empty or zero-variance inputs return 0.
+
+### Ledoit-Wolf shrinkage covariance
+
+The sample covariance matrix is singular or ill-conditioned once the number of assets
+approaches the number of observations — and any optimizer that inverts it (mean-variance,
+risk parity, Kelly) turns that into unstable weights. Ledoit-Wolf shrinkage pulls it toward
+a well-conditioned target so the result is always invertible:
+
+```ts
+import { ledoitWolfShrinkage } from "orderflow-metrics";
+
+// observations: n rows, each one period's returns across the p assets
+const returns = [
+  [0.012, 0.008, -0.004], [-0.006, -0.003, 0.011], [0.021, 0.015, 0.002],
+  [-0.014, -0.009, -0.007], [0.005, 0.004, 0.013], [0.018, 0.012, -0.001],
+];
+
+ledoitWolfShrinkage(returns);
+// { covariance: [[...],[...],[...]], shrinkage: 0.3662, mu: ... }
+// Σ̂ = (1 − 0.366)·S + 0.366·μ·I — sample covariance pulled 37% toward the target
+```
+
+- `ledoitWolfShrinkage` — Ledoit &amp; Wolf (2004) shrinkage: Σ̂ = (1 − δ)·S + δ·μ·I, with the intensity δ ∈ [0, 1] chosen from the data (wider / noisier panels shrink harder) and the target μ·I, μ = trace(S)/p the average variance; the result is positive-definite and invertible with off-diagonal noise damped
+- returns the shrunk `covariance` (p × p), the `shrinkage` intensity δ, and the target scale `mu`; `assumeCentered` skips mean subtraction. Maximum-likelihood (divide-by-n) convention; the standard conditioning step before feeding a covariance to any optimizer
 
 ### Realized semicovariance
 

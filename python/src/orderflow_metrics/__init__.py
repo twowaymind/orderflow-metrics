@@ -137,6 +137,7 @@ from .ljungbox import (
     PortmanteauResult,
 )
 from .adf import augmented_dickey_fuller, AdfResult
+from .shrinkage import ledoit_wolf_shrinkage, ShrinkageCovariance
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -388,6 +389,9 @@ __all__ = [
     # Augmented Dickey-Fuller unit-root test (stationarity / pairs trading)
     "augmented_dickey_fuller",
     "AdfResult",
+    # Ledoit-Wolf shrinkage covariance (well-conditioned covariance for optimization)
+    "ledoit_wolf_shrinkage",
+    "ShrinkageCovariance",
     # jump-robust realized variance
     "min_rv",
     "med_rv",

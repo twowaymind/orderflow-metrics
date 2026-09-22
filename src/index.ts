@@ -194,3 +194,5 @@ export type { PortmanteauResult } from "./ljungbox.ts";
 export { ljungBox, boxPierce, chiSquareSurvival } from "./ljungbox.ts";
 export type { AdfRegression, AdfResult } from "./adf.ts";
 export { augmentedDickeyFuller } from "./adf.ts";
+export type { ShrinkageCovariance } from "./shrinkage.ts";
+export { ledoitWolfShrinkage } from "./shrinkage.ts";

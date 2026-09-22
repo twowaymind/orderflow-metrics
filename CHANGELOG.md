@@ -4,6 +4,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.51.0] - 2026-09-22
+
+### Added
+- Ledoit-Wolf shrinkage covariance (`shrinkage`) — a well-conditioned covariance matrix
+  fit for optimization. The sample covariance is ill-conditioned or singular when the
+  number of assets approaches or exceeds the number of observations, and any optimizer
+  that inverts it turns that noise into unstable weights. `ledoitWolfShrinkage(observations)`
+  pulls the sample covariance S toward a scaled-identity target μ·I (μ = trace(S)/p) by a
+  data-chosen intensity δ ∈ [0, 1] that minimizes expected error: Σ̂ = (1 − δ)·S + δ·μ·I,
+  always positive-definite and invertible, with off-diagonal noise damped (Ledoit & Wolf,
+  2004, *A well-conditioned estimator for large-dimensional covariance matrices*). Returns
+  the shrunk matrix, the intensity δ, and the target scale μ; `assumeCentered` skips mean
+  subtraction. Maximum-likelihood (divide-by-n) convention, dependency-free — matches
+  `sklearn.covariance.ledoit_wolf` to ~1e-15 on both the matrix and the intensity. The
+  standard conditioning step ahead of the `covariance` / mean-variance / Kelly tooling.
+  (Python: 0.39.0.)
+
 ## [0.50.0] - 2026-09-21
 
 ### Added
