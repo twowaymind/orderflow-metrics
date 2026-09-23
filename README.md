@@ -20,7 +20,7 @@ source is also vendorable directly (Node 22+ type-stripping, no build step).
 - **Fair value & spreads** — [Fair value](#fair-value) · [Spread estimators (OHLC)](#spread-estimators-from-ohlc)
 - **Execution & impact** — [Execution cost & price impact](#execution-cost--price-impact) · [Market impact](#market-impact) · [Adverse selection (markout profiles)](#adverse-selection-markout-profiles) · [Implementation shortfall](#implementation-shortfall) · [Execution scheduling](#execution-scheduling)
 - **Order book** — [Order book](#order-book)
-- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [VaR backtesting](#var-backtesting) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
+- **Volatility & risk** — [Volatility](#volatility) · [Range-based volatility (OHLC)](#range-based-volatility-from-ohlc) · [Realized moments](#realized-moments) · [Jumps & bipower variation](#jumps--bipower-variation) · [Lee-Mykland jump test (timing)](#lee-mykland-jump-test-timing) · [Realized semivariance](#realized-semivariance) · [HAR-RV volatility forecasting](#har-rv-volatility-forecasting) · [Forecast comparison (Diebold-Mariano)](#forecast-comparison-diebold-mariano) · [Value-at-Risk & Expected Shortfall](#value-at-risk--expected-shortfall) · [VaR backtesting](#var-backtesting) · [Risk-adjusted performance](#risk-adjusted-performance) · [Benchmark-relative performance](#benchmark-relative-performance) · [Kelly criterion (position sizing)](#kelly-criterion-position-sizing)
 - **Market efficiency** — [Market efficiency](#market-efficiency) · [Portmanteau autocorrelation tests](#portmanteau-autocorrelation-tests) · [Augmented Dickey-Fuller unit-root test](#augmented-dickey-fuller-unit-root-test) · [Hurst exponent](#hurst-exponent) · [Mean reversion (half-life & z-score)](#mean-reversion-half-life--z-score)
 - **Liquidity** — [Liquidity](#liquidity) · [Pástor-Stambaugh liquidity (return reversal)](#pástor-stambaugh-liquidity-return-reversal)
 - **Streaming** — [Online / streaming estimators](#online--streaming-estimators)
@@ -907,6 +907,30 @@ harComponents(rv); // { daily, weekly, monthly } — the latest RV^(d), RV^(w), 
 
 - `harForecast` — fits `RVₜ₊₁ = β₀ + β_d·RV^(d) + β_w·RV^(w) + β_m·RV^(m)` by OLS and returns the one-step-ahead forecast; `NaN` with fewer than `monthly + 4` observations
 - `harComponents` — the daily / weekly (5) / monthly (22) averages at the end of the series; windows are configurable
+
+### Forecast comparison (Diebold-Mariano)
+
+A new model posts a lower average error than the benchmark — real edge, or luck? The
+Diebold-Mariano test answers it properly, correcting for the serial correlation in forecast
+errors that a naive t-test ignores:
+
+```ts
+import { dieboldMariano, studentTSurvival } from "orderflow-metrics";
+
+// forecast errors (actual − forecast) of the two models over the same points
+const errors1 = [ /* candidate model */ ];
+const errors2 = [ /* benchmark */ ];
+
+dieboldMariano(errors1, errors2);
+// { statistic: -2.37, pValue: 0.023, n: 40, horizon: 1 }
+// statistic < 0 ⇒ model 1 has the lower loss; p < 0.05 ⇒ the edge is significant
+
+dieboldMariano(errors1, errors2, { horizon: 5, power: 1 }); // 5-step, absolute loss
+studentTSurvival(2.0, 10); // exact Student-t upper tail P(T_df > t), a reusable primitive
+```
+
+- `dieboldMariano` — Diebold &amp; Mariano (1995) test of equal predictive accuracy with the Harvey-Leybourne-Newbold (1997) small-sample correction; a negative statistic favours the first model, and the p-value uses a Student-t(n − 1) reference. `horizon` sets the autocorrelation correction, `power` the loss (2 = squared, 1 = absolute), `alternative` one- or two-sided
+- `studentTSurvival` — exact dependency-free Student-t upper tail P(T_df > t) for **any** degrees of freedom (regularized incomplete beta); a reusable primitive alongside `chiSquareSurvival` and `standardNormalCdf`
 
 ### Value-at-Risk & Expected Shortfall
 

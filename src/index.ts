@@ -196,3 +196,5 @@ export type { AdfRegression, AdfResult } from "./adf.ts";
 export { augmentedDickeyFuller } from "./adf.ts";
 export type { ShrinkageCovariance } from "./shrinkage.ts";
 export { ledoitWolfShrinkage } from "./shrinkage.ts";
+export type { DieboldMarianoResult } from "./dmtest.ts";
+export { dieboldMariano, studentTSurvival } from "./dmtest.ts";

@@ -4,6 +4,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project follows [Semantic Versioning](https://semver.org/); pre-1.0 the
 public API may still change between minor versions.
 
+## [0.52.0] - 2026-09-23
+
+### Added
+- Diebold-Mariano test of equal predictive accuracy (`dmtest`) — the significance test on
+  top of the `har` forecasting tooling. `dieboldMariano(errors1, errors2)` compares two
+  models' forecast errors over the same points via the loss differential
+  dₜ = g(e₁ₜ) − g(e₂ₜ) (squared or absolute loss), testing its mean against a long-run
+  variance that accounts for forecast-error autocorrelation up to the horizon (Diebold &
+  Mariano 1995), with the Harvey-Leybourne-Newbold (1997) small-sample correction and a
+  Student-t reference. A negative statistic means the first model has the lower loss; a
+  small p-value says the edge is unlikely to be chance. `horizon`, `power` (2 = squared,
+  1 = absolute), and one-/two-sided `alternative` are configurable. Ships a reusable
+  general-df `studentTSurvival` — the Student-t upper tail via an exact, dependency-free
+  regularized incomplete beta (Lanczos log-Γ + continued fraction), joining
+  `chiSquareSurvival` and `standardNormalCdf` as a distribution primitive. Verified against
+  `scipy.stats.t` to ~1e-13 and the DM statistic against a numpy reference. (Python: 0.40.0.)
+
 ## [0.51.0] - 2026-09-22
 
 ### Added

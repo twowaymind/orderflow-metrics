@@ -138,6 +138,7 @@ from .ljungbox import (
 )
 from .adf import augmented_dickey_fuller, AdfResult
 from .shrinkage import ledoit_wolf_shrinkage, ShrinkageCovariance
+from .dmtest import diebold_mariano, student_t_survival, DieboldMarianoResult
 from .robustvol import med_rv, min_rv, realized_quarticity
 from .noise import noise_variance, sparse_realized_variance, volatility_signature
 from .tsrv import two_scale_realized_variance, two_scale_realized_volatility
@@ -392,6 +393,10 @@ __all__ = [
     # Ledoit-Wolf shrinkage covariance (well-conditioned covariance for optimization)
     "ledoit_wolf_shrinkage",
     "ShrinkageCovariance",
+    # Diebold-Mariano test of equal predictive accuracy (+ Student-t tail)
+    "diebold_mariano",
+    "student_t_survival",
+    "DieboldMarianoResult",
     # jump-robust realized variance
     "min_rv",
     "med_rv",
